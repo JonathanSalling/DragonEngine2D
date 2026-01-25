@@ -33,3 +33,4 @@
 /DragonEngine/.vs
 *.pdb
 /DragonEngine/Intermediate
+*.idb
