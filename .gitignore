@@ -32,3 +32,4 @@
 *.app
 /DragonEngine/.vs
 *.pdb
+/DragonEngine/Intermediate
