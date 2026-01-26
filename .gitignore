@@ -34,3 +34,14 @@
 *.pdb
 /DragonEngine/Intermediate
 *.idb
+/DragonEngine/DragonUtilities/x64
+/DragonEngine - Bad Example/.vs
+/DragonEngine v.0.1/.vs
+/DragonEngine v.0.1/Intermediate
+/RealDragonEngine/.vs
+/RealDragonEngine/lib/SDL3/x64/optional
+/RealDragonEngine/lib/SDL3/arm64/optional
+/RealDragonEngine/lib/SDL3/x86/optional
+/DragonEngine v.0.1/lib/SDL3/arm64/optional
+/DragonEngine v.0.1/lib/SDL3/x64/optional
+/DragonEngine v.0.1/lib/SDL3/x86/optional

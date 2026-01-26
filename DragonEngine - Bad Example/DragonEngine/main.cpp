@@ -58,9 +58,6 @@ SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event)
 
 	switch (event->type)
 	{
-	case SDL_EVENT_QUIT:
-		return SDL_APP_SUCCESS;
-
 	case SDL_EVENT_KEY_DOWN:
 		switch (event->key.scancode)
 		{
