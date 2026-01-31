@@ -45,3 +45,7 @@
 /DragonEngine v.0.1/lib/SDL3/arm64/optional
 /DragonEngine v.0.1/lib/SDL3/x64/optional
 /DragonEngine v.0.1/lib/SDL3/x86/optional
+*.tlog
+*.recipe
+*.log
+*.ilk
