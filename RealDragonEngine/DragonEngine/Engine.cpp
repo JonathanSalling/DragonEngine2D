@@ -5,7 +5,9 @@
 
 #define SAFE_DELETE(aPointer) delete aPointer; aPointer = nullptr;
 
-Engine::Engine() : myRenderer(nullptr), myWindow(nullptr)
+Engine::Engine() : myRenderer(nullptr), myWindow(nullptr), 
+myWindowWidth(1280), myWindowHeight(720), 
+myRenderWidth(myWindowWidth), myRenderHeight(myWindowHeight)
 {
 }
 
@@ -24,12 +26,12 @@ SDL_AppResult Engine::Start()
 		return SDL_APP_FAILURE;
 	}
 
-	if (!SDL_CreateWindowAndRenderer("DragonEngine", 640, 480, SDL_WINDOW_RESIZABLE, &myWindow, &myRenderer))
+	if (!SDL_CreateWindowAndRenderer("DragonEngine", myWindowWidth, myWindowHeight, SDL_WINDOW_RESIZABLE, &myWindow, &myRenderer))
 	{
 		SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
 		return SDL_APP_FAILURE;
 	}
-	SDL_SetRenderLogicalPresentation(myRenderer, 640, 480, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+	SDL_SetRenderLogicalPresentation(myRenderer, myRenderWidth, myRenderHeight, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
 	return SDL_APP_CONTINUE;  /* carry on with the program! */
 }

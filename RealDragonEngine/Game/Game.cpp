@@ -44,16 +44,16 @@ void Game::UpdateCallBack()
 	const float red = 124.f / 255.f;
 	const float green = 196.f / 255.f;
 	const float blue = 0.f / 255.f;
-	SDL_SetRenderDrawColorFloat(Engine::GetInstance().myRenderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
+	SDL_SetRenderDrawColorFloat(Engine::GetInstance().GetRenderer(), red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
 
 	/* clear the window to the draw color. */
-	SDL_RenderClear(Engine::GetInstance().myRenderer);
+	SDL_RenderClear(Engine::GetInstance().GetRenderer());
 
 	/* ask the game world to render itself. */
 	myGameWorld.Render();
 
 	/* put the newly-cleared rendering on the screen. */
-	SDL_RenderPresent(Engine::GetInstance().myRenderer);
+	SDL_RenderPresent(Engine::GetInstance().GetRenderer());
 
 }
 

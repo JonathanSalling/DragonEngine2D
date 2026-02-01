@@ -11,14 +11,13 @@ GameWorld::~GameWorld()
 
 void GameWorld::Initialize()
 {
-	/* Load a image */
-	DragonEngineIconTexture = IMG_LoadTexture(Engine::GetInstance().myRenderer, "DragonEngine.png");
-	if (!DragonEngineIconTexture)
-	{
-		SDL_Log("Couldn't load icon: %s\n", SDL_GetError());
-	}
+	myDragonEngineLogoSprite = new DragonEngine::Sprite("Sprites/DragonEngine.png");
 
-	myPlayer.Initialize(*DragonEngineIconTexture);
+	myDragonEngineLogoSprite->SetPosition({ 0.5f, 0.5f });
+	myDragonEngineLogoSprite->SetScale({ 0.75f, 0.75f });
+	myDragonEngineLogoSprite->SetPivot({ 0.5f, 0.5f });
+
+	myPlayer.Initialize();
 }
 
 void GameWorld::Update(DragonUtilities::InputManager aInputHandler, float aDeltaTime)
@@ -28,5 +27,6 @@ void GameWorld::Update(DragonUtilities::InputManager aInputHandler, float aDelta
 
 void GameWorld::Render()
 {
-	myPlayer.Render(*Engine::GetInstance().myRenderer);
+	myDragonEngineLogoSprite->Render();
+	myPlayer.Render();
 }

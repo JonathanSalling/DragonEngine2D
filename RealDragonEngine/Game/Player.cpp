@@ -1,12 +1,11 @@
 #include "Player.h"
 #include <InputManager.h>
 
-Player::Player()
+Player::Player() :
+	myTexture(nullptr), myPosition(0.f, 0.f),
+	myVelocity(0.f, 0.f), mySpeed(0.f)
 {
-	myPosition = DragonUtilities::Vector2<float>(320.0f, 240.0f);
-	mySpeed = 200.0f; // pixels per second
-	myTexture = nullptr;
-	mySize = DragonUtilities::Vector2<float>(0.0f, 0.0f);
+
 }
 
 Player::~Player()
@@ -14,9 +13,13 @@ Player::~Player()
 	myTexture = nullptr;
 }
 
-void Player::Initialize(SDL_Texture& aTexture)
+void Player::Initialize()
 {
-	myTexture = &aTexture;
+	myTexture = new DragonEngine::Sprite("Sprites/DragonEngine.png");
+	myPosition = DragonUtilities::Vector2<float>(0.5f, 0.5f);
+	mySpeed = 1.0f; // pixels per second
+	myTexture->SetScale({ 0.5f, 0.5f });
+	myTexture->SetPivot({ 0.5f, 0.5f });
 }
 
 void Player::Update(float aDeltaTime, const DragonUtilities::InputManager& aInputManager)
@@ -63,17 +66,17 @@ const DragonUtilities::Vector2<float>& Player::GetVelocity() const
 	return myVelocity;
 }
 
-int Player::GetWidth() const
+float Player::GetWidth() const
 {
-	return myTexture->w;
+	return myTexture->GetScale().x;
 }
 
-int Player::GetHeight() const
+float Player::GetHeight() const
 {
-	return myTexture->h;
+	return myTexture->GetScale().y;
 }
 
-void Player::Render(SDL_Renderer& aRenderer)
+void Player::Render()
 {
 	SDL_FRect playerRect = { myPosition.x, myPosition.y, (float)GetWidth() * 0.5f, (float)GetHeight() * 0.5f };
 
@@ -81,5 +84,7 @@ void Player::Render(SDL_Renderer& aRenderer)
 	playerRect.x = myPosition.x - playerRect.w * 0.5f;
 	playerRect.y = myPosition.y - playerRect.h * 0.5f;
 
-	SDL_RenderTexture(&aRenderer, myTexture, nullptr, &playerRect);
+	myTexture->SetPosition({ myPosition.x,myPosition.y });
+
+	myTexture->Render();
 }

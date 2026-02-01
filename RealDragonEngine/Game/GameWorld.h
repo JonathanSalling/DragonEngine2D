@@ -16,7 +16,7 @@ public:
 	void Render();
 
 private:
-	SDL_Texture* DragonEngineIconTexture;
+	DragonEngine::Sprite* myDragonEngineLogoSprite;
 	Player myPlayer;
 };
 

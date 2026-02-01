@@ -3,13 +3,14 @@
 #include <Vector2.hpp>
 #include <InputManager.h>
 #include <SDL3_image/SDL_image.h>
+#include <Sprite.h>
 
 class Player
 {
 public:
 	Player();
 	~Player();
-	void Initialize(SDL_Texture& aTexture);
+	void Initialize();
 	void Update(float deltaTime, const DragonUtilities::InputManager& aInputManager);
 
 	void SetPosition(const DragonUtilities::Vector2<float>& aPosition);
@@ -17,12 +18,12 @@ public:
 	const DragonUtilities::Vector2<float>& GetPosition() const;
 	const DragonUtilities::Vector2<float>& GetVelocity() const;
 
-	int GetWidth() const;
-	int GetHeight() const;
+	float GetWidth() const;
+	float GetHeight() const;
 
 	float GetSpeed() const { return mySpeed; }
 
-	void Render(SDL_Renderer& aRenderer);
+	void Render();
 
 
 private:
@@ -30,7 +31,6 @@ private:
 	DragonUtilities::Vector2<float> myVelocity;
 	float mySpeed;
 
-	SDL_Texture* myTexture;
-	DragonUtilities::Vector2<float> mySize;
+	DragonEngine::Sprite* myTexture;
 };
 
