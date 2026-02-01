@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <SDL3/SDL_render.h>
 #include <Engine.h>
 
 Game::Game()
@@ -39,7 +40,11 @@ void Game::UpdateCallBack()
 {
 	myTimer.Update();
 	myGameWorld.Update(myInputManager, myTimer.GetDeltaTime());
+	RenderCallBack();
+}
 
+void Game::RenderCallBack()
+{
 	/* choose the color for the frame we will draw.*/
 	const float red = 124.f / 255.f;
 	const float green = 196.f / 255.f;
@@ -54,7 +59,6 @@ void Game::UpdateCallBack()
 
 	/* put the newly-cleared rendering on the screen. */
 	SDL_RenderPresent(Engine::GetInstance().GetRenderer());
-
 }
 
 bool Game::UpdateInput(const SDL_Event& anEvent)

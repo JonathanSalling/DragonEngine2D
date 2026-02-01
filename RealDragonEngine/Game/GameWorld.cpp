@@ -1,7 +1,7 @@
 #include "GameWorld.h"
-#include <Engine.h>
+#include "Sprite.h"
 
-GameWorld::GameWorld()
+GameWorld::GameWorld() : myDragonEngineLogoSprite(nullptr)
 {
 }
 
@@ -16,17 +16,16 @@ void GameWorld::Initialize()
 	myDragonEngineLogoSprite->SetPosition({ 0.5f, 0.5f });
 	myDragonEngineLogoSprite->SetScale({ 0.75f, 0.75f });
 	myDragonEngineLogoSprite->SetPivot({ 0.5f, 0.5f });
-
-	myPlayer.Initialize();
 }
 
 void GameWorld::Update(DragonUtilities::InputManager aInputHandler, float aDeltaTime)
 {
-	myPlayer.Update(aDeltaTime, aInputHandler);
+	aDeltaTime; aInputHandler; // Unused variable
+
+	// Write update/gameplay logic here
 }
 
 void GameWorld::Render()
 {
 	myDragonEngineLogoSprite->Render();
-	myPlayer.Render();
 }

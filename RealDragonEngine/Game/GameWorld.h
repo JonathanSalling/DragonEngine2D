@@ -1,10 +1,12 @@
 #pragma once
 
-#include "Player.h"
 #include "InputManager.h"
 #include "Timer.h"
 
-#include "TemplateUtilities.h"
+namespace DragonEngine
+{
+	class Sprite;
+}
 
 class GameWorld
 {
@@ -17,6 +19,5 @@ public:
 
 private:
 	DragonEngine::Sprite* myDragonEngineLogoSprite;
-	Player myPlayer;
 };
 
