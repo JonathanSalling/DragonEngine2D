@@ -1,8 +1,8 @@
 #pragma once
 
-#include "DragonUtilities/Vector2.hpp"
+#include <Vector2.hpp>
+#include <InputManager.h>
 #include <SDL3_image/SDL_image.h>
-#include "DragonUtilities/InputManager.h"
 
 class Player
 {

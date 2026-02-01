@@ -1,5 +1,5 @@
 #include "Player.h"
-#include <DragonUtilities/InputManager.h>
+#include <InputManager.h>
 
 Player::Player()
 {

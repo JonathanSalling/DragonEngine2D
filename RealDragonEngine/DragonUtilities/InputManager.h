@@ -1,7 +1,5 @@
 #pragma once
 #include <array>
-#include "SDL3/SDL_scancode.h"
-#include <SDL3/SDL_video.h>
 #include <SDL3/SDL_events.h>
 
 namespace DragonUtilities

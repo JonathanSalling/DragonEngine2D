@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "InputManager.h"
-#include <SDL3/SDL_rect.h>
 
 bool DragonUtilities::InputManager::IsKeyDown(SDL_Scancode aKeyCode) const
 {
