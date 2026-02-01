@@ -1,0 +1,45 @@
+#include "Engine.h"
+#include <SDL3/SDL_render.h>
+#include "SDL3/SDL_log.h"
+#include <SDL3_image/SDL_image.h>
+
+#define SAFE_DELETE(aPointer) delete aPointer; aPointer = nullptr;
+
+Engine::Engine() : myRenderer(nullptr), myWindow(nullptr), 
+myWindowWidth(1280), myWindowHeight(720), 
+myRenderWidth(myWindowWidth), myRenderHeight(myWindowHeight)
+{
+}
+
+Engine::~Engine()
+{
+	Shutdown();
+}
+
+SDL_AppResult Engine::Start()
+{
+	SDL_SetAppMetadata("Example Renderer Clear", "1.0", "com.example.renderer-clear");
+
+	if (!SDL_Init(SDL_INIT_VIDEO))
+	{
+		SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
+		return SDL_APP_FAILURE;
+	}
+
+	if (!SDL_CreateWindowAndRenderer("DragonEngine", myWindowWidth, myWindowHeight, SDL_WINDOW_RESIZABLE, &myWindow, &myRenderer))
+	{
+		SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
+		return SDL_APP_FAILURE;
+	}
+	SDL_SetRenderLogicalPresentation(myRenderer, myRenderWidth, myRenderHeight, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+
+	return SDL_APP_CONTINUE;  /* carry on with the program! */
+}
+
+void Engine::Shutdown()
+{
+	/* SDL will clean up the window/renderer for us. */
+	if (myRenderer) { SDL_DestroyRenderer(myRenderer); myRenderer = NULL; }
+	if (myWindow) { SDL_DestroyWindow(myWindow);  myWindow = NULL; }
+	SDL_Quit();
+}
