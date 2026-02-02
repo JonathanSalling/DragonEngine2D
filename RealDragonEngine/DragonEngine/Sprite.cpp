@@ -92,3 +92,19 @@ DragonEngine::Vector2<float> DragonEngine::Sprite::GetScale() const
 {
 	return myScale;
 }
+
+DragonEngine::Vector2<float> DragonEngine::Sprite::GetSize() const
+{
+	if (!myTexture)
+	{
+		return { 0.f, 0.f };
+	}
+
+	const float renderWidth = static_cast<float>(Engine::GetInstance().GetRenderWidth());
+	const float renderHeight = static_cast<float>(Engine::GetInstance().GetRenderHeight());
+
+	const float pixelWidth = myTexture->w * myScale.x;
+	const float pixelHeight = myTexture->h * myScale.y;
+
+	return { pixelWidth / renderWidth,pixelHeight / renderHeight };
+}

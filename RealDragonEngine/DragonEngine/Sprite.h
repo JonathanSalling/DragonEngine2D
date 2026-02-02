@@ -65,6 +65,9 @@ namespace DragonEngine
 		// Gets the scale of the sprite (relative to original size).
 		DragonEngine::Vector2<float> GetScale() const;
 
+		// Returns the sprite's size in normalized screen space.
+		DragonEngine::Vector2<float> GetSize() const;
+
 	private:
 		// Loads a texture from the given file path.
 		bool LoadTexture(const std::string& aPath);

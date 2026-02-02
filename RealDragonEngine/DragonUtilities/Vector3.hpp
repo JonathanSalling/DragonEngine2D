@@ -37,49 +37,29 @@ namespace DragonUtilities
 	//Returns the vector sum of aVector0 and aVector1
 	template <class T> Vector3<T> operator+(const Vector3<T>& aVector0, const Vector3<T>& aVector1)
 	{
-		T x = aVector0.x + aVector1.x;
-		T y = aVector0.y + aVector1.y;
-		T z = aVector0.z + aVector1.z;
-
-		return Vector3<T>(x, y, z);
+		return Vector3<T>(aVector0.x + aVector1.x, aVector0.y + aVector1.y, aVector0.z + aVector1.z);
 	}
 	//Returns the vector difference of aVector0 and aVector1
 	template <class T> Vector3<T> operator-(const Vector3<T>& aVector0, const Vector3<T>& aVector1)
 	{
-		T x = aVector0.x - aVector1.x;
-		T y = aVector0.y - aVector1.y;
-		T z = aVector0.z - aVector1.z;
-
-		return Vector3<T>(x, y, z);
+		return Vector3<T>(aVector0.x - aVector1.x, aVector0.y - aVector1.y, aVector0.z - aVector1.z);
 	}
 	//Returns the vector aVector multiplied by the scalar aScalar
 	template <class T> Vector3<T> operator*(const Vector3<T>& aVector, const T& aScalar)
 	{
-		T x = aVector.x * aScalar;
-		T y = aVector.y * aScalar;
-		T z = aVector.z * aScalar;
-
-		return Vector3<T>(x, y, z);
+		return Vector3<T>(aVector.x * aScalar, aVector.y * aScalar, aVector.z * aScalar);
 	}
 	//Returns the vector aVector multiplied by the scalar aScalar
 	template <class T> Vector3<T> operator*(const T& aScalar, const Vector3<T>& aVector)
 	{
-		T x = aVector.x * aScalar;
-		T y = aVector.y * aScalar;
-		T z = aVector.z * aScalar;
-
-		return Vector3<T>(x, y, z);
+		return Vector3<T>(aVector.x * aScalar, aVector.y * aScalar, aVector.z * aScalar);
 	}
 	//Returns the vector aVector divided by the scalar aScalar (equivalent to aVectormultiplied by 1 / aScalar)
 	template <class T> Vector3<T> operator/(const Vector3<T>& aVector, const T& aScalar)
 	{
 		if (aScalar != 0)
 		{
-			T x = aVector.x / aScalar;
-			T y = aVector.y / aScalar;
-			T z = aVector.z / aScalar;
-
-			return Vector3<T>(x, y, z);
+			return Vector3<T>(aVector.x / aScalar, aVector.y / aScalar, aVector.z / aScalar);
 		}
 		else
 		{
@@ -89,38 +69,32 @@ namespace DragonUtilities
 	//Equivalent to setting aVector0 to (aVector0 + aVector1)
 	template <class T> void operator+=(Vector3<T>& aVector0, const Vector3<T>& aVector1)
 	{
-		aVector0.x = aVector0.x + aVector1.x;
-		aVector0.y = aVector0.y + aVector1.y;
-		aVector0.z = aVector0.z + aVector1.z;
+		aVector0.x += aVector1.x;
+		aVector0.y += aVector1.y;
+		aVector0.z += aVector1.z;
 	}
 	//Equivalent to setting aVector0 to (aVector0 - aVector1)
 	template <class T> void operator-=(Vector3<T>& aVector0, const Vector3<T>& aVector1)
 	{
-		aVector0.x = aVector0.x - aVector1.x;
-		aVector0.y = aVector0.y - aVector1.y;
-		aVector0.z = aVector0.z - aVector1.z;
+		aVector0.x -= aVector1.x;
+		aVector0.y -= aVector1.y;
+		aVector0.z -= aVector1.z;
 	}
 	//Equivalent to setting aVector to (aVector * aScalar)
 	template <class T> void operator*=(Vector3<T>& aVector, const T& aScalar)
 	{
-		aVector.x = aVector.x * aScalar;
-		aVector.y = aVector.y * aScalar;
-		aVector.z = aVector.z * aScalar;
+		aVector.x -= aScalar;
+		aVector.y -= aScalar;
+		aVector.z -= aScalar;
 	}
 	//Equivalent to setting aVector to (aVector / aScalar)
 	template <class T> void operator/=(Vector3<T>& aVector, const T& aScalar)
 	{
 		if (aScalar != 0)
 		{
-			aVector.x = aVector.x / aScalar;
-			aVector.y = aVector.y / aScalar;
-			aVector.z = aVector.z / aScalar;
-		}
-		else
-		{
-			aVector.x = aVector.x;
-			aVector.y = aVector.y;
-			aVector.z = aVector.z;
+			aVector.x /= aScalar;
+			aVector.y /= aScalar;
+			aVector.z /= aScalar;
 		}
 	}
 	template<class T>
@@ -145,16 +119,16 @@ namespace DragonUtilities
 	template<class T>
 	inline T Vector3<T>::Length() const
 	{
-		return std::sqrt((x * x) + (y * y) + (z * z));
+		return std::sqrt(LengthSqr());
 	}
 	template<class T>
 	inline Vector3<T> Vector3<T>::GetNormalized() const
 	{
-		T length = std::sqrt((x * x) + (y * y) + (z * z));
+		T length = Length();
 
 		if (length != 0)
 		{
-			return Vector3<T>(x/length, y/length, z/length);
+			return *this / length;
 		}
 		else
 		{
@@ -167,9 +141,8 @@ namespace DragonUtilities
 		T length = std::sqrt((x * x) + (y * y) + (z * z));
 		if (length != 0)
 		{
-			x = x / length;
-			y = y / length;
-			z = z / length;
+			*this /= length;
+
 		}
 		else
 		{

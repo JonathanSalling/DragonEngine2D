@@ -62,10 +62,6 @@ bool DragonUtilities::InputManager::UpdateEvents(const SDL_Event& aEvent)
 
 	case SDL_EVENT_MOUSE_MOTION:
 		myPreviousMPos = myMousePosition;
-
-		myMouseDelta.x += static_cast<int>(aEvent.motion.xrel);
-		myMouseDelta.y += static_cast<int>(aEvent.motion.yrel);
-
 		myMousePosition.x = static_cast<int>(aEvent.motion.x);
 		myMousePosition.y = static_cast<int>(aEvent.motion.y);
 		break;
