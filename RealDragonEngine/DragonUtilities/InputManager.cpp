@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "InputManager.h"
+#include <SDL3/SDL_rect.h>
 
 bool DragonUtilities::InputManager::IsKeyDown(SDL_Scancode aKeyCode) const
 {
@@ -31,46 +32,46 @@ int DragonUtilities::InputManager::GetMouseWheelDelta() const
 	return myMouseWheelDelta;
 }
 
-bool DragonUtilities::InputManager::UpdateEvents(const SDL_Event& event)
+bool DragonUtilities::InputManager::UpdateEvents(const SDL_Event& aEvent)
 {
 	myMouseWheelDelta = 0;
 
-	for (auto& key : myKeyInfo)
+	for (KeyInfo& key : myKeyInfo)
 	{
 		key.isPressed = false;
 		key.isReleased = false;
 	}
 
-	switch (event.type)
+	switch (aEvent.type)
 	{
 	case SDL_EVENT_KEY_DOWN:
 	{
-		myKeyInfo[event.key.scancode].isReleased = false;
-
-		auto& key = myKeyInfo[event.key.scancode];
-		if (!key.isDown)
+		if (myKeyInfo[aEvent.key.scancode].isDown == false)
 		{
-			key.isPressed = true;
+			myKeyInfo[aEvent.key.scancode].isPressed = true;
 		}
-		key.isDown = true;
+		myKeyInfo[aEvent.key.scancode].isDown = true;
 		break;
 	}
 	case SDL_EVENT_KEY_UP:
 	{
-		auto& key = myKeyInfo[event.key.scancode];
-		key.isDown = false;
-		key.isReleased = true;
+		myKeyInfo[aEvent.key.scancode].isDown = false;
+		myKeyInfo[aEvent.key.scancode].isReleased = true;
 		break;
 	}
 
 	case SDL_EVENT_MOUSE_MOTION:
 		myPreviousMPos = myMousePosition;
-		myMousePosition.x = (int)event.motion.x;
-		myMousePosition.y = (int)event.motion.y;
+
+		myMouseDelta.x += static_cast<int>(aEvent.motion.xrel);
+		myMouseDelta.y += static_cast<int>(aEvent.motion.yrel);
+
+		myMousePosition.x = static_cast<int>(aEvent.motion.x);
+		myMousePosition.y = static_cast<int>(aEvent.motion.y);
 		break;
 
 	case SDL_EVENT_MOUSE_WHEEL:
-		myMouseWheelDelta += (int)event.wheel.y;
+		myMouseWheelDelta += static_cast<int>(aEvent.wheel.y);
 		break;
 
 	case SDL_EVENT_QUIT:
