@@ -19,5 +19,6 @@ public:
 
 private:
 	DragonEngine::Sprite* myDragonEngineLogoSprite;
+	float myLogoTime;
 };
 
