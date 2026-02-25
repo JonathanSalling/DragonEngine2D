@@ -1,7 +1,9 @@
 #pragma once
 
-#include "InputManager.h"
-#include "Timer.h"
+namespace DragonUtilities
+{
+	class InputManager;
+}
 
 namespace DragonEngine
 {

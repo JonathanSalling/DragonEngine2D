@@ -1,5 +1,6 @@
 #include "GameWorld.h"
 #include "Sprite.h"
+#include <InputManager.h>
 
 GameWorld::GameWorld() : myDragonEngineLogoSprite(nullptr)
 {

@@ -1,22 +1,28 @@
 #include "Game.h"
 #include <SDL3/SDL_render.h>
+#include "InputManager.h"
+#include "Timer.h"
 #include <Engine.h>
 
 Game::Game()
 {
-
+	myInputManager = new DragonUtilities::InputManager();
+	myTimer = new DragonUtilities::Timer();
 }
 
 Game::~Game()
 {
+	delete myInputManager;
+	myInputManager = nullptr;
 
+	delete myTimer;
+	myTimer = nullptr;
 }
 
 SDL_AppResult Game::Init()
 {
-	if (Engine::GetInstance().Start() == SDL_APP_FAILURE)
+	if (DragonEngine::Engine::GetInstance().Start() == SDL_APP_FAILURE)
 	{
-		system("pause");
 		return SDL_APP_FAILURE;
 	}
 
@@ -28,7 +34,7 @@ SDL_AppResult Game::Init()
 
 void Game::ShutdownGame()
 {
-	Engine::GetInstance().Shutdown();
+	DragonEngine::Engine::GetInstance().Shutdown();
 }
 
 void Game::InitCallBack()
@@ -38,8 +44,8 @@ void Game::InitCallBack()
 
 void Game::UpdateCallBack()
 {
-	myTimer.Update();
-	myGameWorld.Update(myInputManager, myTimer.GetDeltaTime());
+	myTimer->Update();
+	myGameWorld.Update(*myInputManager, myTimer->GetDeltaTime());
 	RenderCallBack();
 }
 
@@ -49,21 +55,21 @@ void Game::RenderCallBack()
 	const float red = 124.f / 255.f;
 	const float green = 196.f / 255.f;
 	const float blue = 0.f / 255.f;
-	SDL_SetRenderDrawColorFloat(Engine::GetInstance().GetRenderer(), red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
+	SDL_SetRenderDrawColorFloat(DragonEngine::Engine::GetInstance().GetRenderer(), red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
 
 	/* clear the window to the draw color. */
-	SDL_RenderClear(Engine::GetInstance().GetRenderer());
+	SDL_RenderClear(DragonEngine::Engine::GetInstance().GetRenderer());
 
 	/* ask the game world to render itself. */
 	myGameWorld.Render();
 
 	/* put the newly-cleared rendering on the screen. */
-	SDL_RenderPresent(Engine::GetInstance().GetRenderer());
+	SDL_RenderPresent(DragonEngine::Engine::GetInstance().GetRenderer());
 }
 
 bool Game::UpdateInput(const SDL_Event& anEvent)
 {
-	if (myInputManager.UpdateEvents(anEvent))
+	if (myInputManager->UpdateEvents(anEvent))
 	{
 		return true;
 	}

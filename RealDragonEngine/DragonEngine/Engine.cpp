@@ -5,18 +5,18 @@
 
 #define SAFE_DELETE(aPointer) delete aPointer; aPointer = nullptr;
 
-Engine::Engine() : myRenderer(nullptr), myWindow(nullptr), 
+DragonEngine::Engine::Engine() : myRenderer(nullptr), myWindow(nullptr),
 myWindowWidth(1280), myWindowHeight(720), 
 myRenderWidth(myWindowWidth), myRenderHeight(myWindowHeight)
 {
 }
 
-Engine::~Engine()
+DragonEngine::Engine::~Engine()
 {
 	Shutdown();
 }
 
-SDL_AppResult Engine::Start()
+SDL_AppResult DragonEngine::Engine::Start()
 {
 	SDL_SetAppMetadata("Example Renderer Clear", "1.0", "com.example.renderer-clear");
 
@@ -36,7 +36,7 @@ SDL_AppResult Engine::Start()
 	return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
 
-void Engine::Shutdown()
+void DragonEngine::Engine::Shutdown()
 {
 	/* SDL will clean up the window/renderer for us. */
 	if (myRenderer) { SDL_DestroyRenderer(myRenderer); myRenderer = NULL; }

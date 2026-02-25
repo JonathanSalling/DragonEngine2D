@@ -32,7 +32,6 @@ SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event)
 SDL_AppResult SDL_AppIterate(void* appstate)
 {
 	appstate;  /* avoid unused parameter warning */
-	system("cls");
 
 	game->UpdateCallBack();
 

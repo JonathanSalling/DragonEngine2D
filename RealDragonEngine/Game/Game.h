@@ -1,8 +1,12 @@
 #pragma once
 #include "GameWorld.h"
-#include <Timer.h>
-#include <InputManager.h>
-#include "Engine.h"
+#include <SDL3/SDL_init.h>
+
+namespace DragonUtilities
+{
+	class InputManager;
+	class Timer;
+}
 
 class Game
 {
@@ -20,7 +24,7 @@ public:
 
 private:
 	GameWorld myGameWorld;
-	DragonUtilities::InputManager myInputManager;
-	DragonUtilities::Timer myTimer;
+	DragonUtilities::InputManager* myInputManager;
+	DragonUtilities::Timer* myTimer;
 };
 

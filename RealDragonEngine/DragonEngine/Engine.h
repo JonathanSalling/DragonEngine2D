@@ -3,40 +3,43 @@
 
 struct SDL_Renderer;
 
-class Engine
+namespace DragonEngine
 {
-public:
-	Engine();
-	~Engine();
-	SDL_AppResult Start();
-	void Shutdown();
-
-	static Engine& GetInstance()
+	class Engine
 	{
-		static Engine instance;
-		return instance;
-	}
+	public:
+		Engine();
+		~Engine();
+		SDL_AppResult Start();
+		void Shutdown();
 
-	SDL_Renderer* GetRenderer() const { return myRenderer; }
-	SDL_Window* GetWindow() const { return myWindow; }
+		static Engine& GetInstance()
+		{
+			static Engine instance;
+			return instance;
+		}
 
-	unsigned short GetWindowWidth() const { return myWindowWidth; }
-	unsigned short GetWindowHeight() const { return myWindowHeight; }
+		SDL_Renderer* GetRenderer() const { return myRenderer; }
+		SDL_Window* GetWindow() const { return myWindow; }
 
-	const unsigned short GetRenderWidth() const { return myRenderWidth; }
-	const unsigned short GetRenderHeight() const { return myRenderHeight; }
+		unsigned short GetWindowWidth() const { return myWindowWidth; }
+		unsigned short GetWindowHeight() const { return myWindowHeight; }
 
-private:
-	/* We will use this renderer to draw into this window every frame. */
-	SDL_Renderer* myRenderer;
-	SDL_Window* myWindow;
+		const unsigned short GetRenderWidth() const { return myRenderWidth; }
+		const unsigned short GetRenderHeight() const { return myRenderHeight; }
 
-	/* How big should the window be? */
-	unsigned short myWindowWidth;
-	unsigned short myWindowHeight;
+	private:
+		/* We will use this renderer to draw into this window every frame. */
+		SDL_Renderer* myRenderer;
+		SDL_Window* myWindow;
 
-	/* What resolution should we render everything in?*/
-	unsigned short myRenderWidth;
-	unsigned short myRenderHeight;
-};
+		/* How big should the window be? */
+		unsigned short myWindowWidth;
+		unsigned short myWindowHeight;
+
+		/* What resolution should we render everything in?*/
+		unsigned short myRenderWidth;
+		unsigned short myRenderHeight;
+	};
+}
 
