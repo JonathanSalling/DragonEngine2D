@@ -1,7 +1,6 @@
 #pragma once
-#include <SDL3/SDL_init.h>
-
 struct SDL_Renderer;
+struct SDL_Window;
 
 namespace DragonEngine
 {
@@ -10,8 +9,11 @@ namespace DragonEngine
 	public:
 		Engine();
 		~Engine();
-		SDL_AppResult Start();
+		int Start();
 		void Shutdown();
+
+		void StartRender();
+		void RenderPresent();
 
 		static Engine& GetInstance()
 		{

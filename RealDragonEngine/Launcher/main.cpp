@@ -11,15 +11,13 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
 
 	game = new Game();
 
-	return game->Init();  /* carry on with the program! */
+	return (SDL_AppResult)game->Init();  /* carry on with the program! */
 }
 
 /* This function runs when a new event (mouse input, keypresses, etc) occurs. */
 SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event)
 {
 	appstate;  /* avoid unused parameter warning */
-
-	game->UpdateInput(*event);
 
 	if (event->type == SDL_EVENT_QUIT)
 	{
@@ -33,6 +31,7 @@ SDL_AppResult SDL_AppIterate(void* appstate)
 {
 	appstate;  /* avoid unused parameter warning */
 
+	game->UpdateInput();
 	game->UpdateCallBack();
 
 	return SDL_APP_CONTINUE;  /* carry on with the program! */
