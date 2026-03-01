@@ -39,11 +39,11 @@ unsigned int DragonEngine::Color::AsHex()
 	return final;
 }
 
-DragonEngine::Color DragonEngine::Color::Grayscale() const
+DragonEngine::Color DragonEngine::Color::DisableEffect() const
 {
-	float factor = 0.9f; // 0 = fully gray/black, 1 = full color
-	Color grayOut(255.f * factor, 255.f * factor, 255.f * factor, 255.f * 0.6f);
-	return grayOut;
+	float colorProduct = 0.5f * 255.f; // 0 = fully gray/black, 1 = full color
+	float alphaProduct = 0.8f * 255.f; // 0 = fully gray/black, 1 = full color
+	return Color(colorProduct, colorProduct, colorProduct, alphaProduct);
 }
 
 DragonEngine::Color Random()

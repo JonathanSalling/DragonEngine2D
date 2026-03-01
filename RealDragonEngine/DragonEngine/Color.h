@@ -18,7 +18,7 @@ namespace DragonEngine
 
 		unsigned int AsHex();
 
-		DragonEngine::Color Grayscale() const;
+		DragonEngine::Color DisableEffect() const;
 
 		SDL_Color AsSDLColor() const;
 
