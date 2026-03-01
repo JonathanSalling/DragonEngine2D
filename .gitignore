@@ -51,3 +51,4 @@
 *.iobj
 *.ipdb
 /DragonEngine v.0.3/.vs
+/RealDragonEngine/lib/DragonEngine
