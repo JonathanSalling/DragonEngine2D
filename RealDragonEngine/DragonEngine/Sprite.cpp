@@ -149,10 +149,10 @@ void DragonEngine::Sprite::Render() const
 	if (!myTexture) { return; }
 
 	// SDL_SetTextureColorMod expects Uint8 values for RGB, so we need to convert from float (0-255) to Uint8 (0-255).
-	Uint8 red = static_cast<Uint8>(myColor.myRed);
-	Uint8 green = static_cast<Uint8>(myColor.myGreen);
-	Uint8 blue = static_cast<Uint8>(myColor.myBlue);
-	Uint8 alpha = static_cast<Uint8>(myColor.myAlpha);
+	Uint8 red = static_cast<Uint8>(myColor.r);
+	Uint8 green = static_cast<Uint8>(myColor.g);
+	Uint8 blue = static_cast<Uint8>(myColor.b);
+	Uint8 alpha = static_cast<Uint8>(myColor.a);
 	SDL_SetTextureColorMod(myTexture, red, green, blue);
 	SDL_SetTextureAlphaMod(myTexture, alpha);
 
