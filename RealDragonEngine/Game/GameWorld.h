@@ -16,7 +16,7 @@ public:
 	GameWorld();
 	~GameWorld();
 	void Initialize();
-	void Update(DragonUtilities::InputManager aInputHandler, float aDeltaTime);
+	void Update(const DragonUtilities::InputManager& aInputHandler, const float& aDeltaTime);
 	void Render();
 
 private:

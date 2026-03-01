@@ -1,6 +1,5 @@
 #pragma once
 #include "GameWorld.h"
-//#include "Engine.h"
 
 namespace DragonUtilities
 {
@@ -21,7 +20,6 @@ public:
 	void UpdateCallBack();
 	void RenderCallBack();
 
-	// The engine forwards raw SDL events to the game layer.
 	bool UpdateInput();
 
 private:

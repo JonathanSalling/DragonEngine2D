@@ -26,7 +26,7 @@ int Game::Init()
 	}
 
 	/* Initialization code can go here. */
-	myGameWorld.Initialize();
+	InitCallBack();
 
 	return 0;  /* carry on with the program! */
 }
@@ -34,6 +34,7 @@ int Game::Init()
 void Game::ShutdownGame()
 {
 	DragonEngine::Engine::GetInstance().Shutdown();
+	std::exit(0);
 }
 
 void Game::InitCallBack()
