@@ -11,7 +11,7 @@ namespace DragonEngine
 	public:
 		T x, y;
 		//Creates a null-vector
-		Vector2<T>();
+		Vector2<T>() = default;
 		//Creates a vector (aX, aY)
 		Vector2<T>(const T& aX, const T& aY);
 		//Copy constructor (compiler generated)

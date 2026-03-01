@@ -2,6 +2,7 @@
 #include <SDL3/SDL_render.h>
 #include "SDL3/SDL_log.h"
 #include <SDL3_image/SDL_image.h>
+#include "Debug.h"
 
 #define SAFE_DELETE(aPointer) delete aPointer; aPointer = nullptr;
 
@@ -32,6 +33,8 @@ int DragonEngine::Engine::Start()
 		return SDL_APP_FAILURE;
 	}
 	SDL_SetRenderLogicalPresentation(myRenderer, myRenderWidth, myRenderHeight, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+
+	DragonEngine::Debug::Initialize();
 
 	return SDL_APP_CONTINUE;  /* carry on with the program! */
 }

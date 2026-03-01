@@ -2,6 +2,8 @@
 #include <algorithm>
 #include "Timer.hpp"
 #include "Engine.h"
+#include <SDL3/SDL_rect.h>
+#include <SDL3/SDL_render.h>
 
 void DragonEngine::Debug::Initialize()
 {
@@ -12,60 +14,58 @@ void DragonEngine::Debug::Initialize()
 	return;
 }
 
-void DragonEngine::Debug::DrawPoint(DragonEngine::Vector2f aVector, float aStayForSeconds)
+void DragonEngine::Debug::DrawPoint(Vector2f aVector, float aStayForSeconds)
 {
 	if (!myInstance) return;
 	double removeAfterTime = DE::Timer::GetTotalTime() + aStayForSeconds;
 	aVector = Engine::GetInstance().NormalSpaceToScreenSpace(aVector);
-	myInstance->myElements.emplace_back(DragonEngine::Debug::Data({ removeAfterTime, DragonEngine::Debug::Data::Point{aVector.x, aVector.y} }));
+	myInstance->myElements.emplace_back(Debug::Data({ removeAfterTime, Debug::Data::Point{aVector.x, aVector.y} }));
 }
 
-void DragonEngine::Debug::DrawBox(DragonEngine::Vector2f aPosition, DragonEngine::Vector2f size, float aStayForSeconds)
+void DragonEngine::Debug::DrawBox(Vector2f aPosition, Vector2f aSize, float aStayForSeconds)
 {
 	if (!myInstance) return;
 	double removeAfterTime = DE::Timer::GetTotalTime() + aStayForSeconds;
-	DragonEngine::Vector2f screenCoordsPos(Engine::GetInstance().NormalSpaceToScreenSpace(aPosition));
-	DragonEngine::Vector2f screenCoordsSize(Engine::GetInstance().NormalSpaceToScreenSpace(size));
-	myInstance->myElements.emplace_back(DragonEngine::Debug::Data({
-		removeAfterTime,
-		DragonEngine::Debug::Data::Box{screenCoordsPos.x, screenCoordsPos.y, screenCoordsSize.x, screenCoordsSize.y}
-		}
-	));
+	Vector2f screenCoordsPos(Engine::GetInstance().NormalSpaceToScreenSpace(aPosition));
+	Vector2f screenCoordsSize(Engine::GetInstance().NormalSpaceToScreenSpace(aSize));
+
+
+	myInstance->myElements.emplace_back(Debug::Data({ removeAfterTime,
+		Debug::Data::Box{screenCoordsPos.x, screenCoordsPos.y, screenCoordsSize.x, screenCoordsSize.y} }));
 }
 
-void DragonEngine::Debug::DrawLine(DragonEngine::Vector2f aStart, DragonEngine::Vector2f aEnd, float aStayForSeconds)
+void DragonEngine::Debug::DrawLine(Vector2f aStart, Vector2f aEnd, float aStayForSeconds)
 {
 	if (!myInstance) return;
 	double removeAfterTime = DE::Timer::GetTotalTime() + aStayForSeconds;
 	aStart = Engine::GetInstance().NormalSpaceToScreenSpace(aStart);
 	aEnd = Engine::GetInstance().NormalSpaceToScreenSpace(aEnd);
-	myInstance->myElements.emplace_back(DragonEngine::Debug::Data({ removeAfterTime, DragonEngine::Debug::Data::Line{aStart.x, aStart.y, aEnd.x, aEnd.y} }));
+	myInstance->myElements.emplace_back(Debug::Data({ removeAfterTime, Debug::Data::Line{aStart.x, aStart.y, aEnd.x, aEnd.y} }));
 }
 
-void DragonEngine::Debug::DrawCircle(DragonEngine::Vector2f aCenter, float aRadius, float aStayForSeconds)
+void DragonEngine::Debug::DrawCircle(Vector2f aCenter, float aRadius, float aStayForSeconds)
 {
 	if (!myInstance) return;
 	double removeAfterTime = DE::Timer::GetTotalTime() + aStayForSeconds;
-	myInstance->myElements.emplace_back(DragonEngine::Debug::Data({
+	myInstance->myElements.emplace_back(Debug::Data({
 		removeAfterTime,
-		DragonEngine::Debug::Data::Circle { Engine::GetInstance().NormalSpaceToScreenSpace(aCenter), aRadius}
+		Debug::Data::Circle { Engine::GetInstance().NormalSpaceToScreenSpace(aCenter), aRadius}
 		}
 	));
 }
 
 void DragonEngine::Debug::RenderInternal(SDL_Renderer* aRenderer)
 {
-
-	SDL_SetRenderDrawColorFloat(Engine::GetInstance().GetRenderer(), DrawColor.r, DrawColor.g, DrawColor.b, DrawColor.a);
-	for (auto& e : myElements)
+	SDL_SetRenderDrawColorFloat(Engine::GetInstance().GetRenderer(), myDrawColor.r, myDrawColor.g, myDrawColor.b, myDrawColor.a);
+	for (auto& element : myElements)
 	{
-		std::visit([&](auto& shape) { RenderElement(shape, aRenderer); }, e.shape);
+		std::visit([&](auto& myShape) { RenderElement(myShape, aRenderer); }, element.myShape);
 	}
 
 	double time = DE::Timer::GetTotalTime(); //Ooohhh; double time!!
 	myElements.erase(std::remove_if(myElements.begin(),
 		myElements.end(),
-		[time](const DragonEngine::Debug::Data& e) { return time > e.drawUntil; }),
+		[time](const Debug::Data& e) { return time > e.myDrawUntil; }),
 		myElements.end());
 }
 
@@ -74,9 +74,10 @@ void DragonEngine::Debug::RenderElement(Data::Point point, SDL_Renderer* aRender
 	SDL_RenderPoint(aRenderer, point.x, point.y);
 }
 
-void DragonEngine::Debug::RenderElement(Data::Box box, SDL_Renderer* aRenderer)
+void DragonEngine::Debug::RenderElement(Data::Box aBox, SDL_Renderer* aRenderer)
 {
-	SDL_RenderRect(aRenderer, &box.myRect);
+	SDL_FRect rect{ aBox.x, aBox.y, aBox.w, aBox.h };
+	SDL_RenderRect(aRenderer, &rect);
 }
 
 void DragonEngine::Debug::RenderElement(Data::Line line, SDL_Renderer* aRenderer)

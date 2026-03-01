@@ -1,15 +1,17 @@
 #pragma once
 #include <variant>
 #include <vector>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_render.h>
 #include "Color.h"
 #include "EngineVector.h"
 
-namespace DragonEngine {
-	class Debug {
+struct SDL_Renderer;
+
+namespace DragonEngine
+{
+	class Debug
+	{
 	public:
-		inline static DragonEngine::Color DrawColor = DragonEngine::Color::Red;
+		inline static DragonEngine::Color myDrawColor = DragonEngine::Color::Red;
 
 #ifndef NDEBUG
 		static void Initialize();
@@ -23,21 +25,26 @@ namespace DragonEngine {
 		static void DrawCircle(DragonEngine::Vector2f aCenter, float aRadius, float aStayForSeconds = -1.0f);
 
 	private:
-		struct Data {
-			double drawUntil;
+		struct Data 
+		{
+			double myDrawUntil;
 
-			struct Box { SDL_FRect myRect; };
+			struct Box { float x, y, w, h; };
 			struct Line { float x0, y0, x1, y1; };
 			struct Circle { DragonEngine::Vector2f myCenter; float myRadius; };
 			struct Point { float x, y; };
 
-			std::variant<Box, Line, Circle, Point> shape;
-			Data(double du, Box b) : drawUntil(du), shape(b) {}
-			Data(double du, Line l) : drawUntil(du), shape(l) {}
-			Data(double du, Circle c) : drawUntil(du), shape(c) {}
-			Data(double du, Point p) : drawUntil(du), shape(p) {}
+			std::variant<Box, Line, Circle, Point> myShape;
+
+			template <typename Shape>
+			Data(double aDuration, Shape&& aShape) : myDrawUntil(aDuration), myShape(aShape) {}
+
+			//Data(double aDuration, Box aBox) : myDrawUntil(aDuration), myShape(aBox) {}
+			//Data(double aDuration, Line aLine) : myDrawUntil(aDuration), myShape(aLine) {}
+			//Data(double aDuration, Circle aCircle) : myDrawUntil(aDuration), myShape(aCircle) {}
+			//Data(double aDuration, Point aPoint) : myDrawUntil(aDuration), myShape(aPoint) {}
 		};
-		
+
 		void RenderInternal(SDL_Renderer* aRenderer);
 
 		void RenderElement(Data::Point aPoint, SDL_Renderer* aRenderer);
@@ -65,7 +72,6 @@ namespace DragonEngine {
 
 		std::vector<Data> myElements;
 	};
-
 }
 
 

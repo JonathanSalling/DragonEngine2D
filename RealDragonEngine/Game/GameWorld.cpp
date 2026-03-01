@@ -2,6 +2,8 @@
 #include "Sprite.h"
 #include <InputManager.h>
 #include <Engine.h>
+#include <Debug.h>
+#include "Timer.hpp"
 
 GameWorld::GameWorld() : myDragonEngineLogoSprite(nullptr)
 {
@@ -45,10 +47,19 @@ void GameWorld::Update(const DragonUtilities::InputManager& aInputHandler, const
 		myDragonEngineLogoSprite->SetColor(myDragonEngineLogoSprite->GetColor().DisableEffect());
 	}
 
+	static DragonEngine::Vector2f oldPos;
+	DragonEngine::Debug::DrawLine(oldPos, myDragonEngineLogoSprite->GetPosition(), 1.0f);
+	oldPos = myDragonEngineLogoSprite->GetPosition();
+	DragonEngine::Debug::DrawPoint({ 0.5f, 0.5f });
+	DragonEngine::Debug::DrawCircle({ 0.25f, 0.5f }, static_cast<float>(static_cast<int>(DragonEngine::Timer::GetTotalTime() * 20.0) % DragonEngine::Engine::GetInstance().GetRenderHeight()));
+	DragonEngine::Debug::DrawBox({ 0.75f, 0.75f }, { 0.25f, 0.25f });
+
 	// Write update/gameplay logic here
 }
 
 void GameWorld::Render()
 {
 	myDragonEngineLogoSprite->Render();
+
+	DragonEngine::Debug::Render(DragonEngine::Engine::GetInstance().GetRenderer());
 }
