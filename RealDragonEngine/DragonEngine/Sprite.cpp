@@ -5,9 +5,13 @@
 
 DragonEngine::Sprite::Sprite() :
 	myTexture(nullptr),
-	myPosition(0.f, 0.f),	// top-left of the screen (normalized)
-	myScale(1.f, 1.f),		// 1 = native texture size
-	myPivot(0.5f, 0.5f)		// center pivot by default
+	myPosition(0.f, 0.f),				// top-left of the screen (normalized)
+	myScale(1.f, 1.f),					// 1 = native texture size
+	myPivot(0.5f, 0.5f),				// center pivot by default
+	myRotation(0.0),					// Rotation in degrees (clockwise)
+	myColor(255.f, 255.f, 255.f, 255.f), // default to white (no tint)
+	myWidth(0),
+	myHeight(0)
 {
 }
 
@@ -55,7 +59,18 @@ bool DragonEngine::Sprite::LoadTexture(const std::string& aPath)
 	if (!myTexture)
 	{
 		SDL_Log("Failed to create texture from surface: %s", SDL_GetError());
+		return false;
 	}
+
+	float w = 0.f;
+	float h = 0.f;
+
+	SDL_GetTextureSize(myTexture, &w, &h);
+
+	myWidth = static_cast<int>(w);
+	myHeight = static_cast<int>(h);
+
+	SDL_SetTextureBlendMode(myTexture, SDL_BLENDMODE_BLEND);
 
 	SDL_DestroySurface(surface);
 	return myTexture != nullptr;
@@ -86,7 +101,7 @@ void DragonEngine::Sprite::SetRotation(const double rotation)
 	myRotation = rotation;
 }
 
-const double DragonEngine::Sprite::GetRotation() const
+double DragonEngine::Sprite::GetRotation() const
 {
 	return myRotation;
 }
@@ -94,23 +109,6 @@ const double DragonEngine::Sprite::GetRotation() const
 void DragonEngine::Sprite::SetColor(const DragonEngine::Color& aColor)
 {
 	myColor = aColor;
-
-	// SDL_SetTextureColorMod expects Uint8 values for RGB, so we need to convert from float (0-255) to Uint8 (0-255).
-	Uint8 red = static_cast<Uint8>(myColor.myRed);
-	Uint8 green = static_cast<Uint8>(myColor.myGreen);
-	Uint8 blue = static_cast<Uint8>(myColor.myBlue);
-	Uint8 alpha = static_cast<Uint8>(myColor.myAlpha);
-	SDL_SetTextureColorMod(myTexture, red, green, blue);
-	SDL_SetTextureAlphaMod(myTexture, alpha);
-
-	if (alpha < 255)
-	{
-		SDL_BlendMode currentBlend;
-		if (SDL_GetTextureBlendMode(myTexture, &currentBlend) == 0 && currentBlend != SDL_BLENDMODE_BLEND)
-		{
-			SDL_SetTextureBlendMode(myTexture, SDL_BLENDMODE_BLEND);
-		}
-	}
 }
 
 DragonEngine::Vector2<float> DragonEngine::Sprite::GetScale() const
@@ -118,7 +116,7 @@ DragonEngine::Vector2<float> DragonEngine::Sprite::GetScale() const
 	return myScale;
 }
 
-DragonEngine::Vector2<float> DragonEngine::Sprite::GetSize() const
+DragonEngine::Vector2<float> DragonEngine::Sprite::GetNormalizedSize() const
 {
 	if (!myTexture)
 	{
@@ -134,9 +132,29 @@ DragonEngine::Vector2<float> DragonEngine::Sprite::GetSize() const
 	return { pixelWidth / renderWidth,pixelHeight / renderHeight };
 }
 
+// Returns the native texture size in pixels (ignores scale)
+DragonEngine::Vector2<int> DragonEngine::Sprite::GetPixelSize() const
+{
+	return { myWidth, myHeight };
+}
+
+// Optional: scaled pixel size
+DragonEngine::Vector2<int> DragonEngine::Sprite::GetScaledPixelSize() const
+{
+	return { static_cast<int>(myWidth * myScale.x), static_cast<int>(myHeight * myScale.y) };
+}
+
 void DragonEngine::Sprite::Render() const
 {
 	if (!myTexture) { return; }
+
+	// SDL_SetTextureColorMod expects Uint8 values for RGB, so we need to convert from float (0-255) to Uint8 (0-255).
+	Uint8 red = static_cast<Uint8>(myColor.myRed);
+	Uint8 green = static_cast<Uint8>(myColor.myGreen);
+	Uint8 blue = static_cast<Uint8>(myColor.myBlue);
+	Uint8 alpha = static_cast<Uint8>(myColor.myAlpha);
+	SDL_SetTextureColorMod(myTexture, red, green, blue);
+	SDL_SetTextureAlphaMod(myTexture, alpha);
 
 	SDL_FRect destinationRect;
 

@@ -77,15 +77,19 @@ namespace DragonEngine
 		DragonEngine::Vector2<float> GetScale() const;
 
 		// Returns the sprite's size in normalized screen space.
-		DragonEngine::Vector2<float> GetSize() const;
+		DragonEngine::Vector2<float> GetNormalizedSize() const;
+
+		// Returns the native texture size in pixels (ignores scale)
+		DragonEngine::Vector2<int> GetPixelSize() const;
+
+		// Returns the sprite's size in pixels after applying scale.
+		DragonEngine::Vector2<int> GetScaledPixelSize() const;
 
 		// Sets the rotation of the sprite in degrees.
 		void SetRotation(const double rotation);
 
 		// Gets the rotation of the sprite in degrees.
-		const double GetRotation() const;
-
-
+		double GetRotation() const;
 
 	private:
 		// Loads a texture from the given file path.
@@ -98,5 +102,7 @@ namespace DragonEngine
 		DragonEngine::Vector2f myScale;		// Relative scale factor
 		DragonEngine::Color myColor;		// Texture color represented as RGB values from 0 to 255 (default is white (255,255,255))
 		double myRotation;
+		int myWidth;
+		int myHeight;
 	};
 }
