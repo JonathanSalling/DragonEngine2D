@@ -168,9 +168,10 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="TemplateUtilities.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="Vector.hpp" />
+    <ClInclude Include="Vector.h" />
     <ClInclude Include="Vector2.hpp" />
     <ClInclude Include="Vector3.hpp" />
+    <ClInclude Include="Vector4.hpp" />
     <ClInclude Include="VectorOnStack.h" />
   </ItemGroup>
   <ItemGroup>

@@ -169,11 +169,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\SDL3\SDL.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="EngineUtilities.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="EngineVector.h" />
     <ClInclude Include="EngineVector2.hpp" />
+    <ClInclude Include="EngineVector3.hpp" />
+    <ClInclude Include="EngineVector4.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>

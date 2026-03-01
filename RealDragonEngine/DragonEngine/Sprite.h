@@ -1,6 +1,7 @@
 #pragma once
-#include "EngineVector2.hpp"
 #include <string>
+#include "EngineVector2.hpp"
+#include "Color.h"
 
 struct SDL_Texture;
 
@@ -60,22 +61,42 @@ namespace DragonEngine
 		// Sets the pivot point of the sprite (normalized 0 to 1).
 		void SetPivot(const DragonEngine::Vector2<float>& aPivot);
 
+		// Gets the pivot point of the sprite (normalized 0 to 1).
+		DragonEngine::Vector2<float> GetPivot() const;
+
 		// Sets the scale of the sprite (relative to original size).
 		void SetScale(const DragonEngine::Vector2<float>& aScale);
+
+		// Sets the color of the sprite (RGB values from 0 to 255).
+		void SetColor(const DragonEngine::Color& aColor);
+
+		// Gets the color of the sprite (RGB values from 0 to 255).
+		DragonEngine::Color GetColor() const;
+
 		// Gets the scale of the sprite (relative to original size).
 		DragonEngine::Vector2<float> GetScale() const;
 
 		// Returns the sprite's size in normalized screen space.
 		DragonEngine::Vector2<float> GetSize() const;
 
+		// Sets the rotation of the sprite in degrees.
+		void SetRotation(const double rotation);
+
+		// Gets the rotation of the sprite in degrees.
+		const double GetRotation() const;
+
+
+
 	private:
 		// Loads a texture from the given file path.
 		bool LoadTexture(const std::string& aPath);
 
 	private:
-		SDL_Texture* myTexture;						// SDL texture owned by this sprite
-		DragonEngine::Vector2<float> myPivot;		// Normalized pivot point
-		DragonEngine::Vector2<float> myPosition;	// Normalized screen position
-		DragonEngine::Vector2<float> myScale;		// Relative scale factor
+		SDL_Texture* myTexture;				// SDL texture owned by this sprite
+		DragonEngine::Vector2f myPivot;		// Normalized pivot point
+		DragonEngine::Vector2f myPosition;	// Normalized screen position
+		DragonEngine::Vector2f myScale;		// Relative scale factor
+		DragonEngine::Color myColor;		// Texture color represented as RGB values from 0 to 255 (default is white (255,255,255))
+		double myRotation;
 	};
 }

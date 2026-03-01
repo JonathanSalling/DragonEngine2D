@@ -66,6 +66,7 @@ namespace DragonUtilities
 		
 		// Returns true only on the frame the mouse button was released
 		bool IsMouseReleased(MouseButton button) const;
+
 		// Current mouse position in window coordinates
 		DragonUtilities::Vector2<int> GetMousePosition() const;
 
@@ -79,8 +80,8 @@ namespace DragonUtilities
 		void SetMousePosition(Vector2<int> aPosition);
 
 	private:
-		Vector2<int> myMousePosition;
-		Vector2<int> myPreviousMousePosition;
+		DragonUtilities::Vector2<int> myMousePosition;
+		DragonUtilities::Vector2<int> myPreviousMousePosition;
 		int myMouseWheelDelta;
 		std::array<KeyInfo, 256> myKeyInfo;
 		MouseButtonInfo myMouseButtons[3]; // LEFT=0, RIGHT=1, MIDDLE=2

@@ -1,6 +1,5 @@
 #pragma once
-#include <iostream>
-#include <cmath>
+#include <math.h>
 
 namespace DragonUtilities
 {
@@ -57,52 +56,43 @@ namespace DragonUtilities
 	//Returns the vector aVector divided by the scalar aScalar (equivalent to aVectormultiplied by 1 / aScalar)
 	template <class T> Vector3<T> operator/(const Vector3<T>& aVector, const T& aScalar)
 	{
-		if (aScalar != 0)
-		{
-			return Vector3<T>(aVector.x / aScalar, aVector.y / aScalar, aVector.z / aScalar);
-		}
-		else
-		{
-			return aVector;
-		}
+		return Vector3<T>((aVector.x / aScalar), (aVector.y / aScalar), (aVector.z / aScalar));
 	}
 	//Equivalent to setting aVector0 to (aVector0 + aVector1)
-	template <class T> void operator+=(Vector3<T>& aVector0, const Vector3<T>& aVector1)
+	template <class T>
+	Vector3<T>& operator+=(Vector3<T>& aVector0, const Vector3<T>& aVector1)
 	{
 		aVector0.x += aVector1.x;
 		aVector0.y += aVector1.y;
 		aVector0.z += aVector1.z;
+		return aVector0;
 	}
 	//Equivalent to setting aVector0 to (aVector0 - aVector1)
-	template <class T> void operator-=(Vector3<T>& aVector0, const Vector3<T>& aVector1)
+	template <class T>
+	Vector3<T>& operator-=(Vector3<T>& aVector0, const Vector3<T>& aVector1)
 	{
 		aVector0.x -= aVector1.x;
 		aVector0.y -= aVector1.y;
 		aVector0.z -= aVector1.z;
+		return aVector0;
 	}
 	//Equivalent to setting aVector to (aVector * aScalar)
-	template <class T> void operator*=(Vector3<T>& aVector, const T& aScalar)
+	template <class T>
+	Vector3<T>& operator*=(Vector3<T>& aVector, const T& aScalar)
 	{
-		aVector.x -= aScalar;
-		aVector.y -= aScalar;
-		aVector.z -= aScalar;
+		aVector.x *= aScalar;
+		aVector.y *= aScalar;
+		aVector.z *= aScalar;
+		return aVector;
 	}
 	//Equivalent to setting aVector to (aVector / aScalar)
-	template <class T> void operator/=(Vector3<T>& aVector, const T& aScalar)
+	template <class T>
+	Vector3<T>& operator/=(Vector3<T>& aVector, const T& aScalar)
 	{
-		if (aScalar != 0)
-		{
-			aVector.x /= aScalar;
-			aVector.y /= aScalar;
-			aVector.z /= aScalar;
-		}
-	}
-	template<class T>
-	inline Vector3<T>::Vector3()
-	{
-		x = 0;
-		y = 0;
-		z = 0;
+		aVector.x /= aScalar;
+		aVector.y /= aScalar;
+		aVector.z /= aScalar;
+		return aVector;
 	}
 	template<class T>
 	inline Vector3<T>::Vector3(const T& aX, const T& aY, const T& aZ)
@@ -114,56 +104,49 @@ namespace DragonUtilities
 	template<class T>
 	inline T Vector3<T>::LengthSqr() const
 	{
-		return ((x * x) + (y * y) + (z * z));
+		return T((x * x) + (y * y) + (z * z));
 	}
 	template<class T>
 	inline T Vector3<T>::Length() const
 	{
-		return std::sqrt(LengthSqr());
+		return T(std::sqrt(Length());
 	}
 	template<class T>
 	inline Vector3<T> Vector3<T>::GetNormalized() const
 	{
-		T length = Length();
+		static_assert(std::is_floating_point_v<T>, "GetNormalized() requires floating point type");
 
-		if (length != 0)
-		{
-			return *this / length;
-		}
-		else
-		{
-			return Vector3<T>(x, y, z);
-		}
+		T tempLength = Length();
+		assert(tempLength != 0);
+
+		return (*this) / tempLength;
 	}
 	template<class T>
 	inline void Vector3<T>::Normalize()
 	{
-		T length = std::sqrt((x * x) + (y * y) + (z * z));
-		if (length != 0)
-		{
-			*this /= length;
+		static_assert(std::is_floating_point_v<T>, "Normalize() requires floating point type");
+		T tempLength = Length();
+		assert(tempLength != 0);
 
-		}
-		else
-		{
-			x = x;
-			y = y;
-			z = z;
-		}
+		(*this) /= tempLength;
 	}
 	template<class T>
 	inline T Vector3<T>::Dot(const Vector3<T>& aVector) const
 	{
-		T dot = ((x * aVector.x) + (y * aVector.y) + (z * aVector.z));
-		return dot;
+		return T((x * aVector.x) + (y * aVector.y) + (z * aVector.z));
 	}
 	template<class T>
 	inline Vector3<T> Vector3<T>::Cross(const Vector3<T>& aVector) const
 	{
-		T x1 = (y * aVector.z) - (z * aVector.y);
-		T y1 = (z * aVector.x) - (x * aVector.z);
-		T z1 = (x * aVector.y) - (y * aVector.x);
+		T tempX = (y * aVector.z) - (z * aVector.y);
+		T tempY = (z * aVector.x) - (x * aVector.z);
+		T tempZ = (x * aVector.y) - (y * aVector.x);
 
-		return Vector3<T>(x1, y1, z1);
+		return Vector3<T>(tempX, tempY, tempZ);
 	}
+
+	using Vector3f = Vector3<float>;
+	using Vector3d = Vector3<double>;
 }
+
+namespace DU = DragonUtilities;
