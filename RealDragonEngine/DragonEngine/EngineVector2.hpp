@@ -3,9 +3,6 @@
 #include <cassert >
 #include <type_traits>
 
-
-
-namespace DE = DragonEngine;
 namespace DragonEngine
 {
 	template <class T>
@@ -135,3 +132,4 @@ namespace DragonEngine
 	using Vector2f = Vector2<float>;
 	using Vector2d = Vector2<double>;
 }
+namespace DE = DragonEngine;

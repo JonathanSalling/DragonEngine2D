@@ -98,6 +98,10 @@ namespace DragonEngine
 		return aVector;
 	}
 	template<class T>
+	inline Vector3<T>::Vector3() : x(0), y(0), z(0)
+	{
+	}
+	template<class T>
 	inline Vector3<T>::Vector3(const T& aX, const T& aY, const T& aZ)
 	{
 		x = aX;
@@ -112,7 +116,7 @@ namespace DragonEngine
 	template<class T>
 	inline T Vector3<T>::Length() const
 	{
-		return std::sqrt(LengthSqr();
+		return std::sqrt(LengthSqr());
 	}
 	template<class T>
 	inline Vector3<T> Vector3<T>::GetNormalized() const
