@@ -13,6 +13,8 @@ namespace DragonUtilities
 		float GetDeltaTime() const;
 		double GetTotalTime() const;
 
+		static Timer* GetInstance() { static Timer instance = Timer(); return &instance; }
+
 	private:
 		std::chrono::steady_clock::time_point myProgramStartTimer;
 		std::chrono::duration<float> myUpdateTime;

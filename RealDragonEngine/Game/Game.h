@@ -25,6 +25,5 @@ public:
 private:
 	GameWorld myGameWorld;
 	DragonUtilities::InputManager* myInputManager;
-	DragonUtilities::Timer* myTimer;
 };
 
