@@ -50,10 +50,8 @@ void DragonEngine::Engine::Shutdown()
 void DragonEngine::Engine::StartRender()
 {
 	/* choose the color for the frame we will draw. */
-	const float red = 124.f / 255.f;
-	const float green = 196.f / 255.f;
-	const float blue = 0.f / 255.f;
-	SDL_SetRenderDrawColorFloat(myRenderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
+	const float color = 20.f / 255.f;
+	SDL_SetRenderDrawColorFloat(myRenderer, color, color, color, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
 	/* clear the window to the draw color. */
 	SDL_RenderClear(myRenderer);
 }

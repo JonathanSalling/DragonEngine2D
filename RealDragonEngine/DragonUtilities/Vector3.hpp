@@ -109,7 +109,7 @@ namespace DragonUtilities
 	template<class T>
 	inline T Vector3<T>::Length() const
 	{
-		return T(std::sqrt(Length());
+		return std::sqrt(Length());
 	}
 	template<class T>
 	inline Vector3<T> Vector3<T>::GetNormalized() const
