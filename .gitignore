@@ -54,3 +54,7 @@
 /RealDragonEngine/lib/DragonEngine
 /RealDragonEngine/lib/DragonUtilities
 /RealDragonEngine/lib/Game
+/SolarSystem Version/.vs
+/SolarSystem Version/lib/SDL3/arm64/optional
+/SolarSystem Version/lib/SDL3/x64/optional
+/SolarSystem Version/lib/SDL3/x86/optional
