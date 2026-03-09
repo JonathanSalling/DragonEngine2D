@@ -5,6 +5,7 @@
 #include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
 
+#ifndef NDEBUG
 void DragonEngine::Debug::Initialize()
 {
 	if (myInstance) return;
@@ -14,27 +15,27 @@ void DragonEngine::Debug::Initialize()
 	return;
 }
 
-void DragonEngine::Debug::DrawPoint(Vector2f aVector, float aStayForSeconds)
+void DragonEngine::Debug::DrawPoint(Vector2f aPosition, const float aStayForSeconds)
 {
 	if (!myInstance) return;
-	double removeAfterTime = DE::Timer::GetTotalTime() + aStayForSeconds;
-	aVector = Engine::GetInstance().NormalSpaceToScreenSpace(aVector);
-	myInstance->myElements.emplace_back(Debug::Data({ removeAfterTime, Debug::Data::Point{aVector.x, aVector.y} }));
+	double removeAfterTime = Timer::GetTotalTime() + aStayForSeconds;
+	aPosition = Engine::GetInstance().NormalSpaceToScreenSpace(aPosition);
+	myInstance->myElements.emplace_back(Debug::Data({ removeAfterTime, Debug::Data::Point{aPosition.x, aPosition.y} }));
 }
 
-void DragonEngine::Debug::DrawBox(Vector2f aPosition, Vector2f aSize, float aStayForSeconds)
+void DragonEngine::Debug::DrawBox(const Vector2f aPosition, const Vector2f aSize, const float aStayForSeconds)
 {
 	if (!myInstance) return;
 	double removeAfterTime = DE::Timer::GetTotalTime() + aStayForSeconds;
-	Vector2f screenCoordsPos(Engine::GetInstance().NormalSpaceToScreenSpace(aPosition));
-	Vector2f screenCoordsSize(Engine::GetInstance().NormalSpaceToScreenSpace(aSize));
+	const Vector2f screenCoordsPos(Engine::GetInstance().NormalSpaceToScreenSpace(aPosition));
+	const Vector2f screenCoordsSize(Engine::GetInstance().NormalSpaceToScreenSpace(aSize));
 
 
 	myInstance->myElements.emplace_back(Debug::Data({ removeAfterTime,
 		Debug::Data::Box{screenCoordsPos.x, screenCoordsPos.y, screenCoordsSize.x, screenCoordsSize.y} }));
 }
 
-void DragonEngine::Debug::DrawLine(Vector2f aStart, Vector2f aEnd, float aStayForSeconds)
+void DragonEngine::Debug::DrawLine(Vector2f aStart, Vector2f aEnd, const float aStayForSeconds)
 {
 	if (!myInstance) return;
 	double removeAfterTime = DE::Timer::GetTotalTime() + aStayForSeconds;
@@ -43,7 +44,7 @@ void DragonEngine::Debug::DrawLine(Vector2f aStart, Vector2f aEnd, float aStayFo
 	myInstance->myElements.emplace_back(Debug::Data({ removeAfterTime, Debug::Data::Line{aStart.x, aStart.y, aEnd.x, aEnd.y} }));
 }
 
-void DragonEngine::Debug::DrawCircle(Vector2f aCenter, float aRadius, float aStayForSeconds)
+void DragonEngine::Debug::DrawCircle(const Vector2f aCenter, const float aRadius, const float aStayForSeconds)
 {
 	if (!myInstance) return;
 	double removeAfterTime = DE::Timer::GetTotalTime() + aStayForSeconds;
@@ -62,42 +63,43 @@ void DragonEngine::Debug::RenderInternal(SDL_Renderer* aRenderer)
 		std::visit([&](auto& myShape) { RenderElement(myShape, aRenderer); }, element.myShape);
 	}
 
-	double time = DE::Timer::GetTotalTime(); //Ooohhh; double time!!
+	double time = Timer::GetTotalTime(); //Ooh; double time!!
 	myElements.erase(std::remove_if(myElements.begin(),
 		myElements.end(),
 		[time](const Debug::Data& e) { return time > e.myDrawUntil; }),
 		myElements.end());
 }
 
-void DragonEngine::Debug::RenderElement(Data::Point point, SDL_Renderer* aRenderer)
+void DragonEngine::Debug::RenderElement(const Data::Point aPoint, SDL_Renderer* aRenderer)
 {
-	SDL_RenderPoint(aRenderer, point.x, point.y);
+	SDL_RenderPoint(aRenderer, aPoint.x, aPoint.y);
 }
 
-void DragonEngine::Debug::RenderElement(Data::Box aBox, SDL_Renderer* aRenderer)
+void DragonEngine::Debug::RenderElement(const Data::Box aBox, SDL_Renderer* aRenderer)
 {
 	SDL_FRect rect{ aBox.x, aBox.y, aBox.w, aBox.h };
 	SDL_RenderRect(aRenderer, &rect);
 }
 
-void DragonEngine::Debug::RenderElement(Data::Line line, SDL_Renderer* aRenderer)
+void DragonEngine::Debug::RenderElement(const Data::Line line, SDL_Renderer* aRenderer)
 {
 	SDL_RenderLine(aRenderer, line.x0, line.y0, line.x1, line.y1);
 }
 
-void DragonEngine::Debug::RenderElement(Data::Circle aCircle, SDL_Renderer* aRenderer)
+void DragonEngine::Debug::RenderElement(const Data::Circle aCircle, SDL_Renderer* aRenderer)
 {
 	constexpr float pi(3.14159265358979f);
 	constexpr float resolution(2.5f); //Absolutely overkill for what it is, 1.5f to 3.0f is acceptable to practically perfect circle
 
-	int segments(std::clamp(static_cast<int>(std::ceil(std::sqrt(aCircle.myRadius) * resolution)), 4, 64));
+	int segments(std::clamp(static_cast<int>(std::ceil(std::sqrt(aCircle.radius) * resolution)), 4, 64));
 	float radianStep((2 * pi) / segments);
 	std::vector<SDL_FPoint> corners;
 
 	for (int i = 0; i < segments + 1; ++i)
 	{
-		corners.push_back({ aCircle.myCenter.x + std::sin(i * radianStep) * aCircle.myRadius, aCircle.myCenter.y + std::cos(i * radianStep) * aCircle.myRadius });
+		corners.push_back({ aCircle.center.x + std::sin(i * radianStep) * aCircle.radius, aCircle.center.y + std::cos(i * radianStep) * aCircle.radius });
 	}
 
 	SDL_RenderLines(aRenderer, corners.data(), static_cast<int>(corners.size()));
 }
+#endif
