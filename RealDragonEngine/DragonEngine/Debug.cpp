@@ -50,7 +50,7 @@ void DragonEngine::Debug::DrawCircle(const Vector2f aCenter, const float aRadius
 	double removeAfterTime = DE::Timer::GetTotalTime() + aStayForSeconds;
 	myInstance->myElements.emplace_back(Debug::Data({
 		removeAfterTime,
-		Debug::Data::Circle { Engine::GetInstance().NormalSpaceToScreenSpace(aCenter), aRadius}
+		Debug::Data::Circle { Engine::GetInstance().NormalSpaceToScreenSpace(aCenter), aRadius * Engine::GetInstance().GetRenderWidth()}
 		}
 	));
 }

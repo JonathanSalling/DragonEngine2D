@@ -65,7 +65,7 @@ void GameWorld::Update(const DragonUtilities::InputManager& aInputHandler, const
 		DragonEngine::Debug::DrawLine(oldPos, myDragonEngineLogoSprite->GetPosition(), 1.0f);
 		oldPos = myDragonEngineLogoSprite->GetPosition();
 		DragonEngine::Debug::DrawPoint({ 0.5f, 0.5f });
-		DragonEngine::Debug::DrawCircle({ 0.25f, 0.5f }, static_cast<float>(static_cast<int>(DragonEngine::Timer::GetTotalTime() * 20.0) % DragonEngine::Engine::GetInstance().GetRenderHeight()));
+		DragonEngine::Debug::DrawCircle({ 0.25f, 0.5f }, std::fmodf(static_cast<float>(DragonEngine::Timer::GetTotalTime() * 0.2f), 0.5f));
 		DragonEngine::Debug::DrawBox({ 0.75f, 0.75f }, { 0.25f, 0.25f });
 
 		// Write update/gameplay logic here
