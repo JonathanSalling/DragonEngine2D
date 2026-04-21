@@ -1,7 +1,7 @@
 #pragma once
 #include <cassert>
 
-namespace DragonUtilities
+namespace DragonEngine
 {
 	template <typename T> // returns the larger of two values
 	T Max(const T aFirstValue, const T aSecondValue)

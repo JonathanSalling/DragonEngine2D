@@ -5,7 +5,7 @@
 
 Game::Game()
 {
-	myInputManager = new DragonUtilities::InputManager();
+	myInputManager = new DragonEngine::InputManager();
 }
 
 Game::~Game()

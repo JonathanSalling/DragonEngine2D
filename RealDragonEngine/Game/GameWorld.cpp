@@ -4,6 +4,7 @@
 #include <Engine.h>
 #include <Debug.h>
 #include "Timer.hpp"
+#include <iostream>
 
 GameWorld::GameWorld() : myDragonEngineLogoSprite(nullptr)
 {
@@ -24,7 +25,7 @@ void GameWorld::Initialize()
 	myDragonEngineLogoSprite->SetPivot({ 0.5f, 0.5f });
 }
 
-void GameWorld::Update(const DragonUtilities::InputManager& aInputHandler, const float& aDeltaTime)
+void GameWorld::Update(const DragonEngine::InputManager& aInputHandler, const float& aDeltaTime)
 {
 	aInputHandler;
 

@@ -1,13 +1,9 @@
 #pragma once
 
-namespace DragonUtilities
-{
-	class InputManager;
-}
-
 namespace DragonEngine
 {
 	class Sprite;
+	class InputManager;
 }
 
 class GameWorld
@@ -16,7 +12,7 @@ public:
 	GameWorld();
 	~GameWorld();
 	void Initialize();
-	void Update(const DragonUtilities::InputManager& aInputHandler, const float& aDeltaTime);
+	void Update(const DragonEngine::InputManager& aInputHandler, const float& aDeltaTime);
 	void Render();
 
 private:

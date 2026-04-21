@@ -7,7 +7,7 @@ union SDL_Event;
 enum SDL_Scancode : int;
 
 
-namespace DragonUtilities
+namespace DragonEngine
 {
 	enum class MouseButton
 	{
@@ -50,13 +50,13 @@ namespace DragonUtilities
 		bool Update();
 
 		// Returns true while the key is held down
-		bool IsKeyDown(DragonUtilities::Key aKey) const;
+		bool IsKeyDown(Key aKey) const;
 
 		// Returns true only on the frame the key was pressed
-		bool IsKeyPressed(DragonUtilities::Key aKey) const;
+		bool IsKeyPressed(Key aKey) const;
 
 		// Returns true only on the frame the key was released
-		bool IsKeyReleased(DragonUtilities::Key aKey) const;
+		bool IsKeyReleased(Key aKey) const;
 
 		// Returns true while the mouse button is held down
 		bool IsMouseDown(MouseButton button) const;
@@ -68,10 +68,10 @@ namespace DragonUtilities
 		bool IsMouseReleased(MouseButton button) const;
 
 		// Current mouse position in window coordinates
-		DragonUtilities::Vector2<int> GetMousePosition() const;
+		DragonEngine::Vector2<int> GetMousePosition() const;
 
 		// Mouse movement delta since last frame
-		DragonUtilities::Vector2<int> GetMouseDelta() const;
+		Vector2<int> GetMouseDelta() const;
 
 		// Mouse wheel delta since last frame
 		int GetMouseWheelDelta() const;
@@ -80,8 +80,8 @@ namespace DragonUtilities
 		void SetMousePosition(Vector2<int> aPosition);
 
 	private:
-		DragonUtilities::Vector2<int> myMousePosition;
-		DragonUtilities::Vector2<int> myPreviousMousePosition;
+		Vector2<int> myMousePosition;
+		Vector2<int> myPreviousMousePosition;
 		int myMouseWheelDelta;
 		std::array<KeyInfo, 256> myKeyInfo;
 		MouseButtonInfo myMouseButtons[3]; // LEFT=0, RIGHT=1, MIDDLE=2

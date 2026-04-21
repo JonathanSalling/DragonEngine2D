@@ -169,21 +169,32 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\SDL3\SDL.h" />
+    <ClInclude Include="AABB3D.hpp" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EngineUtilities.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Intersection.hpp" />
+    <ClInclude Include="Matrix.hpp" />
+    <ClInclude Include="Matrix3x3.hpp" />
+    <ClInclude Include="Matrix4x4.hpp" />
+    <ClInclude Include="Plane.hpp" />
+    <ClInclude Include="Ray.hpp" />
+    <ClInclude Include="Sphere.hpp" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="EngineVector.h" />
-    <ClInclude Include="EngineVector2.hpp" />
-    <ClInclude Include="EngineVector3.hpp" />
-    <ClInclude Include="EngineVector4.hpp" />
+    <ClInclude Include="TemplateUtilities.h" />
+    <ClInclude Include="Vector.h" />
+    <ClInclude Include="Vector2.hpp" />
+    <ClInclude Include="Vector3.hpp" />
+    <ClInclude Include="Vector4.hpp" />
     <ClInclude Include="Timer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,9 +1,8 @@
-#include "pch.h"
 #include "InputManager.h"
 #include <SDL3/SDL.h>
 #include <unordered_map>
 
-namespace DragonUtilities {
+namespace DragonEngine {
 
 	// Map Key enum to SDL scancodes internally
 	static const std::unordered_map<Key, SDL_Scancode> keyMap{
@@ -108,18 +107,18 @@ namespace DragonUtilities {
 		return myMouseButtons[static_cast<int>(button)].isReleased;
 	}
 
-	DragonUtilities::Vector2<int> InputManager::GetMousePosition() const
+	DragonEngine::Vector2<int> InputManager::GetMousePosition() const
 	{
 		return myMousePosition;
 	}
 
-	DragonUtilities::Vector2<int> InputManager::GetMouseDelta() const
+	DragonEngine::Vector2<int> InputManager::GetMouseDelta() const
 	{
 		return { myMousePosition.x - myPreviousMousePosition.x,
 				 myMousePosition.y - myPreviousMousePosition.y };
 	}
 
-	void InputManager::SetMousePosition(DragonUtilities::Vector2<int> aPosition)
+	void InputManager::SetMousePosition(DragonEngine::Vector2<int> aPosition)
 	{
 		myMousePosition = aPosition;
 		SDL_WarpMouseInWindow(SDL_GetKeyboardFocus(), static_cast<float>(aPosition.x), static_cast<float>(aPosition.y));

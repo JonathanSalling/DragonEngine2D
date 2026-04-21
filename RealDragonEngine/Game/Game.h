@@ -1,7 +1,7 @@
 #pragma once
 #include "GameWorld.h"
 
-namespace DragonUtilities
+namespace DragonEngine
 {
 	class InputManager;
 	class Timer;
@@ -24,6 +24,6 @@ public:
 
 private:
 	GameWorld myGameWorld;
-	DragonUtilities::InputManager* myInputManager;
+	DragonEngine::InputManager* myInputManager;
 };
 
