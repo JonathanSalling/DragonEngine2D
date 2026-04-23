@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector2.hpp"
 #include "Collider.h"
+#include "BoxCollider.hpp"
 
 namespace DragonEngine
 {

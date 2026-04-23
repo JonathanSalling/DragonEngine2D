@@ -72,7 +72,7 @@
     <ClInclude Include="Ray.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sphere.hpp">
+    <ClInclude Include="SphereCollider.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TemplateUtilities.h">

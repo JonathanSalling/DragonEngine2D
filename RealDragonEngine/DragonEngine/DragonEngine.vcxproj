@@ -183,7 +183,7 @@
     <ClInclude Include="Matrix4x4.hpp" />
     <ClInclude Include="Plane.hpp" />
     <ClInclude Include="Ray.hpp" />
-    <ClInclude Include="Sphere.hpp" />
+    <ClInclude Include="SphereCollider.hpp" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TemplateUtilities.h" />
     <ClInclude Include="Vector.h" />
