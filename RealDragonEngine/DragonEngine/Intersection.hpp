@@ -1,7 +1,7 @@
 #pragma once
 #include "Plane.hpp"
 #include "Ray.hpp"
-#include "AABB3D.hpp"
+#include "BoxCollider.hpp"
 #include "Sphere.hpp"
 
 namespace DragonEngine
@@ -10,10 +10,10 @@ namespace DragonEngine
 	bool IntersectionPlaneRay(const Plane<T>& aPlane, const Ray<T>& aRay, Vector3<T>& aOutIntersectionPoint);
 
 	template<typename T>
-	bool IntersectionAABBRay(const AABB3D<T>& aAABB, const Ray<T>& aRay);
+	bool IntersectionAABBRay(const BoxCollider& aAABB, const Ray<T>& aRay);
 
 	template<typename T>
-	bool IntersectionSphereRay(const Sphere<T>& aSphere, const Ray<T>& aRay);
+	bool IntersectionSphereRay(const SphereCollider& aSphere, const Ray<T>& aRay);
 	template<typename T>
 	bool IntersectionPlaneRay(const Plane<T>& aPlane, const Ray<T>& aRay, Vector3<T>& aOutIntersectionPoint)
 	{
@@ -31,7 +31,7 @@ namespace DragonEngine
 	}
 
 	template<typename T>
-	bool IntersectionAABBRay(const AABB3D<T>& aAABB, const Ray<T>& aRay)
+	bool IntersectionAABBRay(const BoxCollider& aAABB, const Ray<T>& aRay)
 	{
 		if (aAABB.IsInside(aRay.GetOrigin()))
 		{
@@ -41,7 +41,7 @@ namespace DragonEngine
 	}
 
 	template<typename T>
-	bool IntersectionSphereRay(const Sphere<T>& aSphere, const Ray<T>& aRay)
+	bool IntersectionSphereRay(const SphereCollider& aSphere, const Ray<T>& aRay)
 	{
 		
 		Ray<T> origi = aRay;

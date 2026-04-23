@@ -169,7 +169,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\SDL3\SDL.h" />
-    <ClInclude Include="AABB3D.hpp" />
+    <ClInclude Include="BoxCollider.hpp" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Engine.h" />
@@ -191,6 +193,8 @@
     <ClInclude Include="Timer.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Engine.cpp" />

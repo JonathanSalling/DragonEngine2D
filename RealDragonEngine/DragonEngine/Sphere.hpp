@@ -1,66 +1,73 @@
 #pragma once
-#include "Vector3.hpp"
+#include "Vector2.hpp"
+#include "Collider.h"
 
 namespace DragonEngine
 {
-	template <class T>
-	class Sphere
+	class SphereCollider : public Collider
 	{
 	public:
-		Sphere();
-		Sphere(const Sphere<T>& aSphere);
-		Sphere(const Vector3<T>& aCenter, T aRadius);
-		bool IsInside(const Vector3<T>& aPosition) const;
-		Vector3<T> GetCenter() const;
-		T GetRadius() const;
+		SphereCollider();
+		SphereCollider(const SphereCollider& aSphere);
+		SphereCollider(const Vector2f& aCenter, float aRadius);
+		bool IsInside(const Vector2f& aPosition) const;
+		Vector2f GetCenter() const;
+		float GetRadius() const;
+
+		ColliderType GetType() const override;
+		bool Intersects(const BoxCollider& other) const override;
+		bool Intersects(const SphereCollider& other) const override;
+
 	private:
-		Vector3<T> myCenter;
-		T myRadius;
+		Vector2f myCenter;
+		float myRadius;
+
 	};
 
-	template <class T>
-	Sphere<T>::Sphere()
+	SphereCollider::SphereCollider() : myCenter{ 0,0 }, myRadius(0)
 	{
-		myCenter = { 0, 0, 0 };
-		myRadius = 0;
 	}
 
-	template <class T>
-	Sphere<T>::Sphere(const Sphere<T>& aSphere)
+	SphereCollider::SphereCollider(const SphereCollider& aSphere)
+		: myCenter(aSphere.myCenter), myRadius(aSphere.myRadius)
 	{
-		myCenter = aSphere.myCenter;
-		myRadius = aSphere.myRadius;
 	}
 
-	template <class T>
-	Sphere<T>::Sphere(const Vector3<T>& aCenter, T aRadius)
+	SphereCollider::SphereCollider(const Vector2f& aCenter, float aRadius)
+		: myCenter(aCenter), myRadius(aRadius)
 	{
-		myCenter = aCenter;
-		myRadius = aRadius;
 	}
 
-	/*template <class T>
-	Sphere<T>::Sphere(const Vector3<T>& aCenter, T aRadius)
+	bool SphereCollider::IsInside(const Vector2f& aPosition) const
 	{
-		myCenter = aCenter;
-		myRadius = aRadius;
-	}*/
-
-	template <class T>
-	bool Sphere<T>::IsInside(const Vector3<T>& aPosition) const
-	{
-		Vector3<T> distance = aPosition - myCenter;
+		Vector2f distance = aPosition - myCenter;
 		return distance.LengthSqr() <= (myRadius * myRadius);
 	}
 
-	template <class T>
-	T Sphere<T>::GetRadius() const
+	float SphereCollider::GetRadius() const
 	{
 		return myRadius;
 	}
 
-	template <class T>
-	Vector3<T> Sphere<T>::GetCenter() const
+	ColliderType SphereCollider::GetType() const
+	{
+		return ColliderType::Sphere;
+	}
+
+	inline bool SphereCollider::Intersects(const BoxCollider& other) const
+	{
+		return other.Intersects(*this);
+	}
+
+	inline bool SphereCollider::Intersects(const SphereCollider& other) const
+	{
+		Vector2f distance = other.GetCenter() - myCenter;
+		float radius = myRadius + other.GetRadius();
+
+		return distance.LengthSqr() <= (radius * radius);
+	}
+
+	Vector2f SphereCollider::GetCenter() const
 	{
 		return myCenter;
 	}
