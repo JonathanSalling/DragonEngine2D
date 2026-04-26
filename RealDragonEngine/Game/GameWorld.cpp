@@ -26,7 +26,7 @@ void GameWorld::Initialize()
 	myDragonEngineLogoSprite->SetPivot({ 0.5f, 0.5f });
 
 
-	// --- SETUP COLLIDERS --- (This is just example data to demonstrate the API, not actual gameplay logic)
+	// This is just example data to demonstrate the API, not actual gameplay logic
 	myPlayerCollider.SetCenter({ 0.5f, 0.4f });
 	myPlayerCollider.SetHalfSize({ 0.05f, 0.05f });
 
@@ -41,6 +41,7 @@ void GameWorld::Initialize()
 
 void GameWorld::Update(const DragonEngine::InputManager& aInputHandler, const float& aDeltaTime)
 {
+	// Write update/gameplay logic here
 	aInputHandler, aDeltaTime;
 
 	// This is example logic to demonstrate how to use the colliders and debug drawing; replace with actual gameplay logic as needed.
@@ -113,12 +114,13 @@ void GameWorld::Update(const DragonEngine::InputManager& aInputHandler, const fl
 
 	// Draw debug shapes (should be removed)
 	DragonEngine::Debug::DrawCircle({ 0.25f, 0.5f }, 0.1f, DragonEngine::Color::Blue);
-
-	// Write update/gameplay logic here
 }
 
 void GameWorld::Render()
 {
+	// Write rendering logic here
+
+	// This is just example rendering code to demonstrate the API, not actual gameplay rendering logic
 	for (DragonEngine::SphereCollider& bullet : myBulletColliders)
 	{
 		bullet.DebugDraw();
