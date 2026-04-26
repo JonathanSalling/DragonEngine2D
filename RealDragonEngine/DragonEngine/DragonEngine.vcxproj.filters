@@ -51,7 +51,7 @@
     <ClInclude Include="InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BoxCollider.hpp">
+    <ClInclude Include="BoxCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Intersection.hpp">
@@ -72,7 +72,7 @@
     <ClInclude Include="Ray.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SphereCollider.hpp">
+    <ClInclude Include="SphereCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TemplateUtilities.h">
@@ -105,6 +105,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CollisionSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

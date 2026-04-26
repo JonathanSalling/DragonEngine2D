@@ -1,7 +1,23 @@
+#include "BoxCollider.h"
+#include "SphereCollider.h"
 #include "Collider.h"
+#include "Debug.h"
 
-DragonEngine::Collider::Collider() : myId(GenerateUniqueId())
+int DragonEngine::Collider::sNextId = 1;
+
+void DragonEngine::Collider::SetEnabled(bool aEnabled)
 {
+	myEnabled = aEnabled;
+}
+
+bool DragonEngine::Collider::IsEnabled() const
+{
+	return myEnabled;
+}
+
+DragonEngine::Collider::Collider() : myId(sNextId++)
+{
+	myName = "Collider: " + std::to_string(myId);
 }
 
 int DragonEngine::Collider::GenerateUniqueId()

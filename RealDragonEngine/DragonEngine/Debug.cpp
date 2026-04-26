@@ -15,15 +15,15 @@ void DragonEngine::Debug::Initialize()
 	return;
 }
 
-void DragonEngine::Debug::DrawPoint(Vector2f aPosition, const float aStayForSeconds)
+void DragonEngine::Debug::DrawPoint(Vector2f aPosition,Color aColor, const float aStayForSeconds)
 {
 	if (!myInstance) return;
 	double removeAfterTime = Timer::GetTotalTime() + aStayForSeconds;
 	aPosition = Engine::GetInstance().NormalSpaceToScreenSpace(aPosition);
-	myInstance->myElements.emplace_back(Debug::Data({ removeAfterTime, Debug::Data::Point{aPosition.x, aPosition.y} }));
+	myInstance->myElements.emplace_back(Debug::Data({ removeAfterTime, Debug::Data::Point{aPosition.x, aPosition.y}, aColor }));
 }
 
-void DragonEngine::Debug::DrawBox(const Vector2f aPosition, const Vector2f aSize, const float aStayForSeconds)
+void DragonEngine::Debug::DrawBox(const Vector2f aPosition, const Vector2f aSize,Color aColor, const float aStayForSeconds)
 {
 	if (!myInstance) return;
 	double removeAfterTime = DE::Timer::GetTotalTime() + aStayForSeconds;
@@ -32,34 +32,35 @@ void DragonEngine::Debug::DrawBox(const Vector2f aPosition, const Vector2f aSize
 
 
 	myInstance->myElements.emplace_back(Debug::Data({ removeAfterTime,
-		Debug::Data::Box{screenCoordsPos.x, screenCoordsPos.y, screenCoordsSize.x, screenCoordsSize.y} }));
+		Debug::Data::Box{screenCoordsPos.x, screenCoordsPos.y, screenCoordsSize.x, screenCoordsSize.y}, aColor }));
 }
 
-void DragonEngine::Debug::DrawLine(Vector2f aStart, Vector2f aEnd, const float aStayForSeconds)
+void DragonEngine::Debug::DrawLine(Vector2f aStart, Vector2f aEnd, Color aColor, const float aStayForSeconds)
 {
 	if (!myInstance) return;
 	double removeAfterTime = DE::Timer::GetTotalTime() + aStayForSeconds;
 	aStart = Engine::GetInstance().NormalSpaceToScreenSpace(aStart);
 	aEnd = Engine::GetInstance().NormalSpaceToScreenSpace(aEnd);
-	myInstance->myElements.emplace_back(Debug::Data({ removeAfterTime, Debug::Data::Line{aStart.x, aStart.y, aEnd.x, aEnd.y} }));
+	myInstance->myElements.emplace_back(Debug::Data({ removeAfterTime, Debug::Data::Line{aStart.x, aStart.y, aEnd.x, aEnd.y}, aColor }));
 }
 
-void DragonEngine::Debug::DrawCircle(const Vector2f aCenter, const float aRadius, const float aStayForSeconds)
+void DragonEngine::Debug::DrawCircle(const Vector2f aCenter, const float aRadius, Color aColor, const float aStayForSeconds)
 {
 	if (!myInstance) return;
 	double removeAfterTime = DE::Timer::GetTotalTime() + aStayForSeconds;
 	myInstance->myElements.emplace_back(Debug::Data({
 		removeAfterTime,
-		Debug::Data::Circle { Engine::GetInstance().NormalSpaceToScreenSpace(aCenter), aRadius * Engine::GetInstance().GetRenderWidth()}
+		Debug::Data::Circle { Engine::GetInstance().NormalSpaceToScreenSpace(aCenter), aRadius * Engine::GetInstance().GetRenderHeight()}, aColor
 		}
 	));
 }
 
 void DragonEngine::Debug::RenderInternal(SDL_Renderer* aRenderer)
 {
-	SDL_SetRenderDrawColorFloat(Engine::GetInstance().GetRenderer(), myDrawColor.r, myDrawColor.g, myDrawColor.b, myDrawColor.a);
+	//SDL_SetRenderDrawColorFloat(Engine::GetInstance().GetRenderer(), myDrawColor.r, myDrawColor.g, myDrawColor.b, myDrawColor.a);
 	for (auto& element : myElements)
 	{
+		SDL_SetRenderDrawColorFloat(aRenderer, element.myColor.r, element.myColor.g, element.myColor.b, element.myColor.a);
 		std::visit([&](auto& myShape) { RenderElement(myShape, aRenderer); }, element.myShape);
 	}
 

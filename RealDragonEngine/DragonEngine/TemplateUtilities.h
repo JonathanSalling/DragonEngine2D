@@ -12,6 +12,8 @@ namespace DragonEngine
 			return aSecondValue;
 		else if (aFirstValue == aSecondValue)
 			return aFirstValue;
+
+		return aFirstValue; // Default return to avoid compiler warning, should never be reached due to the above conditions
 	}
 
 	template <typename T> // returns the smaller of two values
@@ -23,6 +25,8 @@ namespace DragonEngine
 			return aSecondValue;
 		else if (aFirstValue == aSecondValue)
 			return aFirstValue;
+
+		return aFirstValue; // Default return to avoid compiler warning, should never be reached due to the above conditions
 	}
 
 	template <typename T> // returns the absolute value
@@ -32,6 +36,8 @@ namespace DragonEngine
 			return aValue;
 		else if (aValue < 0)
 			return aValue * -1;
+
+		return aValue; // Default return to avoid compiler warning, should never be reached due to the above conditions
 	}
 
 	template <typename T> // clamps a value between a minimum and maximum
@@ -46,12 +52,13 @@ namespace DragonEngine
 		else
 			return aValue;
 
+		return aValue; // Default return to avoid compiler warning, should never be reached due to the above conditions
 	}
 
 	template <typename T> // linear interpolation between two values
 	T Lerp(const T aFirstValue, const T aSecondValue, float aLerpValue) // interpret lerp value as a percentage
 	{
-			return aFirstValue + (aSecondValue - aFirstValue) * aLerpValue;
+		return aFirstValue + (aSecondValue - aFirstValue) * aLerpValue;
 	}
 
 	template <typename T>
