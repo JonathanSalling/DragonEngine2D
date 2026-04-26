@@ -10,12 +10,10 @@ namespace DragonEngine
 {
 	class Debug
 	{
-	public:
-		inline static DragonEngine::Color myDrawColor = DragonEngine::Color::Red;
-
 	private:
 		struct Data
 		{
+			DragonEngine::Color myColor	;
 			double myDrawUntil;
 
 			struct Box { float x, y, w, h; };
@@ -26,7 +24,7 @@ namespace DragonEngine
 			std::variant<Box, Line, Circle, Point> myShape;
 
 			template <typename Shape>
-			Data(const double aDuration, Shape&& aShape) : myDrawUntil(aDuration), myShape(aShape) {}
+			Data(const double aDuration, Shape&& aShape, Color aColor) : myDrawUntil(aDuration), myShape(aShape), myColor(aColor) {}
 
 			//Data(double aDuration, Box aBox) : myDrawUntil(aDuration), myShape(aBox) {}
 			//Data(double aDuration, Line aLine) : myDrawUntil(aDuration), myShape(aLine) {}
@@ -40,11 +38,10 @@ namespace DragonEngine
 		static void Render(SDL_Renderer* aRenderer) { myInstance->RenderInternal(aRenderer); }
 
 		// Debug build; methods implemented
-		static void DrawPoint(DragonEngine::Vector2f aPosition, float aStayForSeconds = -1.0f);
-		static void DrawBox(DragonEngine::Vector2f aPosition, DragonEngine::Vector2f aSize, float aStayForSeconds = -1.0f);
-		//static void DrawBox2(DragonUtilities::Vector2f first, DragonUtilities::Vector2f second, float aStayForSeconds = 0.0f);
-		static void DrawLine(DragonEngine::Vector2f aStart, DragonEngine::Vector2f aEnd, float aStayForSeconds = -1.0f);
-		static void DrawCircle(DragonEngine::Vector2f aCenter, float aRadius, float aStayForSeconds = -1.0f);
+		static void DrawPoint(DragonEngine::Vector2f aPosition, Color aColor = Color::Red, float aStayForSeconds = -1.0f);
+		static void DrawBox(DragonEngine::Vector2f aPosition, DragonEngine::Vector2f aSize, Color aColor = Color::Red, float aStayForSeconds = -1.0f);
+		static void DrawLine(DragonEngine::Vector2f aStart, DragonEngine::Vector2f aEnd, Color aColor = Color::Red, float aStayForSeconds = -1.0f);
+		static void DrawCircle(DragonEngine::Vector2f aCenter, float aRadius, Color aColor = Color::Red, float aStayForSeconds = -1.0f);
 
 		void RenderInternal(SDL_Renderer* aRenderer);
 

@@ -1,4 +1,8 @@
 #pragma once
+#include "BoxCollider.h"
+#include "SphereCollider.h"
+
+#include <vector>
 
 namespace DragonEngine
 {
@@ -16,6 +20,10 @@ public:
 	void Render();
 
 private:
+	DragonEngine::BoxCollider myPlayerCollider;
+	std::vector<DragonEngine::BoxCollider> myEnemyColliders;
+	std::vector<DragonEngine::SphereCollider> myBulletColliders;
+
 	DragonEngine::Sprite* myDragonEngineLogoSprite;
 	float myLogoTime = 0.f;
 };
