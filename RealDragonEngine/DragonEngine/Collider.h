@@ -33,8 +33,10 @@ namespace DragonEngine
 		virtual bool Intersects(const BoxCollider& aOther) const = 0;
 		virtual bool Intersects(const SphereCollider& aOther) const = 0;
 
-	private:
+	protected:
 		Collider();
+
+	private:
 		int GenerateUniqueId();
 		static int sNextId;
 		int myId;
