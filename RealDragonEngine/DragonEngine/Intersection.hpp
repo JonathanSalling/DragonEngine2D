@@ -2,7 +2,7 @@
 #include "Plane.hpp"
 #include "Ray.hpp"
 #include "BoxCollider.hpp"
-#include "Sphere.hpp"
+#include "SphereCollider.hpp"
 
 namespace DragonEngine
 {

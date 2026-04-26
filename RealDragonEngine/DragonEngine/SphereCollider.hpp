@@ -11,13 +11,14 @@ namespace DragonEngine
 		SphereCollider();
 		SphereCollider(const SphereCollider& aSphere);
 		SphereCollider(const Vector2f& aCenter, float aRadius);
-		bool IsInside(const Vector2f& aPosition) const;
-		Vector2f GetCenter() const;
-		float GetRadius() const;
 
-		ColliderType GetType() const override;
+		bool IsInside(const Vector2f& aPosition) const;
 		bool Intersects(const BoxCollider& other) const override;
 		bool Intersects(const SphereCollider& other) const override;
+
+		Vector2f GetCenter() const;
+		float GetRadius() const;
+		ColliderType GetType() const override;
 
 	private:
 		Vector2f myCenter;

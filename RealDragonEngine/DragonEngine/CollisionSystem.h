@@ -8,7 +8,9 @@ namespace DragonEngine
 	class CollisionSystem
 	{
 	public:
-		static void Check(std::vector<Collider*>& colliders);
+		static bool Check(std::vector<Collider*>& someColliders);
+		static bool Check(std::vector<Collider*>& someColliders, std::vector<Collider*>& someOtherColliders);
+		static bool Check(const Collider& aCollider, const Collider& aOtherCollider);
 	};
 }
 

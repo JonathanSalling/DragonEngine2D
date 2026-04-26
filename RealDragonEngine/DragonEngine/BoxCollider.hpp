@@ -3,7 +3,7 @@
 #include "Collider.h"
 #include <cmath>
 #include "TemplateUtilities.h"
-#include "Sphere.hpp"
+#include "SphereCollider.hpp"
 
 namespace DragonEngine
 {
@@ -56,7 +56,7 @@ namespace DragonEngine
 
 	inline bool BoxCollider::Intersects(const Collider& other) const
 	{
-		return Intersects(other);
+		return other.Intersects(*this);
 	}
 
 	inline bool BoxCollider::Intersects(const BoxCollider& aBoxCollider) const
