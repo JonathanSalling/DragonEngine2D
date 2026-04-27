@@ -144,6 +144,77 @@ DragonEngine::Vector2<int> DragonEngine::Sprite::GetScaledPixelSize() const
 	return { static_cast<int>(myWidth * myScale.x), static_cast<int>(myHeight * myScale.y) };
 }
 
+void DragonEngine::Sprite::ClearSpriteSheet()
+{
+	myIsSpriteSheet = false;
+}
+
+SDL_FRect DragonEngine::Sprite::GetRect(int frameIndex) const
+{
+	float width, height;
+	SDL_GetTextureSize(myTexture, &width, &height);
+
+	float cellWidth = width / myColumnsCount;
+	float cellHeight = height / myRowsCount;
+
+	int row = frameIndex / myColumnsCount;
+	int column = frameIndex % myColumnsCount;
+
+	SDL_FRect rect = {
+		column * cellWidth,
+		row * cellHeight,
+		cellWidth,
+		cellHeight
+	};
+
+	return rect;
+}
+
+void DragonEngine::Sprite::Update(float aDeltaTime)
+{
+	if (!myIsSpriteSheet || !myIsPlaying)
+	{
+		return;
+	}
+
+	myTimer += aDeltaTime;
+
+	if (myTimer >= myFrameTime)
+	{
+		myTimer -= myFrameTime;
+		myCurrentFrame++;
+
+		if (myCurrentFrame >= myFrameCount)
+		{
+			if (myLoop)
+			{
+				myCurrentFrame = 0;
+			}
+			else
+			{
+				myCurrentFrame = myFrameCount - 1;
+			}
+		}
+	}
+}
+
+void DragonEngine::Sprite::SetSpriteSheet(int rows, int cols)
+{
+	if (!myTexture)
+	{
+		SDL_Log("Cannot set sprite sheet on a sprite without a texture.");
+		return;
+	}
+
+	myIsSpriteSheet = true;
+
+	myRowsCount = rows;
+	myColumnsCount = cols;
+
+	myFrameCount = rows * cols;
+	myCurrentFrame = 0;
+}
+
 void DragonEngine::Sprite::Render() const
 {
 	if (!myTexture) { return; }
@@ -171,5 +242,15 @@ void DragonEngine::Sprite::Render() const
 	center.x = destinationRect.w * center.x;
 	center.y = destinationRect.h * center.y;
 
-	SDL_RenderTextureRotated(Engine::GetInstance().GetRenderer(), myTexture, nullptr, &destinationRect, myRotation, &center, SDL_FLIP_NONE);
+	SDL_FRect* srcRect = nullptr;
+	SDL_FRect tempRect;
+	if (myIsSpriteSheet)
+	{
+		tempRect = GetRect(myCurrentFrame);
+		srcRect = &tempRect;
+	}
+
+	SDL_RenderTextureRotated(
+		Engine::GetInstance().GetRenderer(), myTexture, srcRect,
+		&destinationRect, myRotation, &center, SDL_FLIP_NONE);
 }

@@ -21,6 +21,8 @@ void GameWorld::Initialize()
 {
 	myDragonEngineLogoSprite = new DragonEngine::Sprite("Sprites/DragonEngine.png");
 
+	myDragonEngineLogoSprite->SetSpriteSheet(2, 2);
+
 	myDragonEngineLogoSprite->SetPosition({ 0.5f, 0.5f });
 	myDragonEngineLogoSprite->SetScale({ 0.75f, 0.75f });
 	myDragonEngineLogoSprite->SetPivot({ 0.5f, 0.5f });
@@ -43,6 +45,8 @@ void GameWorld::Update(const DragonEngine::InputManager& aInputHandler, const fl
 {
 	// Write update/gameplay logic here
 	aInputHandler, aDeltaTime;
+
+	myDragonEngineLogoSprite->Update(aDeltaTime);
 
 	// This is example logic to demonstrate how to use the colliders and debug drawing; replace with actual gameplay logic as needed.
 

@@ -4,6 +4,7 @@
 #include "Color.h"
 
 struct SDL_Texture;
+struct SDL_FRect;
 
 namespace DragonEngine
 {
@@ -32,8 +33,11 @@ namespace DragonEngine
 	 * The Sprite class hides all SDL rendering details so that
 	 * game code never needs to interact with SDL_Renderer directly.
 	 */
+
 	class Sprite
 	{
+		friend class SpriteSheet;
+
 	public:
 
 		// Creates an empty sprite.
@@ -54,6 +58,15 @@ namespace DragonEngine
 		void SetPosition(const DragonEngine::Vector2<float>& aPosition);
 		// Gets the position of the sprite in normalized screen space.
 		const DragonEngine::Vector2<float>& GetPosition() const;
+
+		// Clears the source rectangle, causing the entire texture to be rendered.
+		void ClearSpriteSheet();
+
+		// Updates the sprite's animation frame based on the elapsed time (deltaTime in seconds).
+		void Update(float aDeltaTime);
+
+		// Sets the sprite sheet for animation (optional).
+		void SetSpriteSheet(int rows, int cols);
 
 		// Renders the sprite to the screen.
 		void Render() const;
@@ -95,6 +108,9 @@ namespace DragonEngine
 		// Loads a texture from the given file path.
 		bool LoadTexture(const std::string& aPath);
 
+		// Helper function to calculate the source rectangle for the current animation frame.
+		SDL_FRect GetRect(int frameIndex) const;
+
 	private:
 		SDL_Texture* myTexture;				// SDL texture owned by this sprite
 		DragonEngine::Vector2f myPivot;		// Normalized pivot point
@@ -104,5 +120,16 @@ namespace DragonEngine
 		double myRotation;
 		int myWidth;
 		int myHeight;
+
+		// Optional animation properties
+		int myRowsCount;
+		int myColumnsCount;
+		bool myIsSpriteSheet = false;
+		int myCurrentFrame = 0;
+		int myFrameCount = 1;
+		float myFrameTime = 0.1f;   // seconds per frame
+		float myTimer = 0.0f;
+		bool myIsPlaying = true;
+		bool myLoop = true;
 	};
 }
