@@ -20,13 +20,6 @@ DragonEngine::Collider::Collider() : myId(sNextId++)
 	myName = "Collider: " + std::to_string(myId);
 }
 
-int DragonEngine::Collider::GenerateUniqueId()
-{
-	myId = sNextId++;
-	myName = "Collider: " + std::to_string(myId);
-	return myId;
-}
-
 void DragonEngine::Collider::SetName(const std::string& aName)
 {
 	myName = aName;
@@ -34,5 +27,5 @@ void DragonEngine::Collider::SetName(const std::string& aName)
 
 std::string DragonEngine::Collider::GetName() const
 {
-	return myName;
+	return myEnabled ? myName : myName + " [disabled]";
 }

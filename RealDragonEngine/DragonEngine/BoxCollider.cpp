@@ -3,17 +3,17 @@
 #include "SphereCollider.h"
 #include "TemplateUtilities.h"
 
-DragonEngine::BoxCollider::BoxCollider() : myCenter{ 0, 0 }, myHalfSize{ 0.1f, 0.1f }
+DragonEngine::BoxCollider::BoxCollider() : myCenter{ 0, 0 }, myHalfSize{ 0.f, 0.f }, Collider() // Call base class default constructor to initialize enabled state and name
 {
 }
 
 DragonEngine::BoxCollider::BoxCollider(const BoxCollider& aBoxCollider)
-	: myCenter(aBoxCollider.myCenter), myHalfSize(aBoxCollider.myHalfSize)
+	: myCenter(aBoxCollider.myCenter), myHalfSize(aBoxCollider.myHalfSize), Collider(aBoxCollider) // Call base class copy constructor to copy enabled state and name
 {
 }
 
 DragonEngine::BoxCollider::BoxCollider(const Vector2f& aCenter, const Vector2f& aHalfSize)
-	: myCenter(aCenter), myHalfSize(aHalfSize)
+	: myCenter(aCenter), myHalfSize(aHalfSize), Collider() // Call base class default constructor to initialize enabled state and name
 {
 }
 
