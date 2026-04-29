@@ -20,7 +20,7 @@ namespace DragonEngine
 		void SetRadius(float aRadius);
 
 		ColliderType GetType() const override;
-		const char* GetTypeName() const { return "SphereCollider"; }
+		const char* GetTypeName() const override;
 		void DebugDraw() const override;
 
 	private:
