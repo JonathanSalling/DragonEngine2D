@@ -112,7 +112,7 @@
       <AdditionalLibraryDirectories>$(SolutionDir)\lib\DragonUtilities\$(configuration)\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Lib>
-      <AdditionalDependencies>DragonEngine.lib;DragonUtilities.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DragonEngine.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\DragonUtilities\$(Configuration)\$(Platform);$(SolutionDir)lib\DragonEngine\$(Configuration)\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -137,7 +137,7 @@
       <AdditionalLibraryDirectories>$(SolutionDir)\lib\DragonUtilities\$(configuration)\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Lib>
-      <AdditionalDependencies>DragonEngine.lib;DragonUtilities.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DragonEngine.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\DragonUtilities\$(Configuration)\$(Platform);$(SolutionDir)lib\DragonEngine\$(Configuration)\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -160,7 +160,7 @@
       <AdditionalLibraryDirectories>$(SolutionDir)\lib\DragonUtilities\$(configuration)\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Lib>
-      <AdditionalDependencies>DragonEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DragonEngine.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\DragonUtilities\$(Configuration)\$(Platform);$(SolutionDir)lib\DragonEngine\$(Configuration)\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -185,7 +185,7 @@
       <AdditionalLibraryDirectories>$(SolutionDir)\lib\DragonUtilities\$(configuration)\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Lib>
-      <AdditionalDependencies>DragonEngine.lib;DragonUtilities.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DragonEngine.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\DragonUtilities\$(Configuration)\$(Platform);$(SolutionDir)lib\DragonEngine\$(Configuration)\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
