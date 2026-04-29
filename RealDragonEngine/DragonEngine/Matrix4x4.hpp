@@ -1,6 +1,5 @@
 #pragma once
 #include <array>
-#include "Matrix4x4.hpp"
 #include <math.h>
 #include <assert.h>
 #include "Vector.h"
@@ -301,4 +300,3 @@ namespace DragonEngine
 		return temp;
 	}
 }
-namespace DU = DragonEngine;

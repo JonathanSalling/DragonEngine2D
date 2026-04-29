@@ -147,5 +147,3 @@ namespace DragonEngine
 	using Vector4f = Vector4<float>;
 	using Vector4d = Vector4<double>;
 }
-
-namespace DE = DragonEngine;

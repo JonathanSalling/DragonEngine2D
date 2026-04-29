@@ -263,4 +263,3 @@ namespace DragonEngine
 		return temp;
 	}
 }
-namespace DU = DragonEngine;

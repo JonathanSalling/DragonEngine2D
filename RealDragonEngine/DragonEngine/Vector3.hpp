@@ -155,5 +155,3 @@ namespace DragonEngine
 	using Vector3f = Vector3<float>;
 	using Vector3d = Vector3<double>;
 }
-
-namespace DE = DragonEngine;
