@@ -13,7 +13,7 @@ namespace DragonEngine
 	private:
 		struct Data
 		{
-			DragonEngine::Color myColor	;
+			DragonEngine::Color myColor;
 			double myDrawUntil;
 
 			struct Box { float x, y, w, h; };
@@ -43,8 +43,6 @@ namespace DragonEngine
 		static void DrawLine(DragonEngine::Vector2f aStart, DragonEngine::Vector2f aEnd, Color aColor = Color::Red, float aStayForSeconds = -1.0f);
 		static void DrawCircle(DragonEngine::Vector2f aCenter, float aRadius, Color aColor = Color::Red, float aStayForSeconds = -1.0f);
 
-		void RenderInternal(SDL_Renderer* aRenderer);
-
 		static void RenderElement(Data::Point aPoint, SDL_Renderer* aRenderer);
 		static void RenderElement(Data::Box aBox, SDL_Renderer* aRenderer);
 		static void RenderElement(Data::Line aLine, SDL_Renderer* aRenderer);
@@ -55,10 +53,10 @@ namespace DragonEngine
 		static void Initialize() noexcept {}
 		static void Render(SDL_Renderer* aRenderer) noexcept { aRenderer; }
 
-		static void DrawPoint(DragonEngine::Vector2f aVector, float aStayForSeconds = 0.0f) noexcept { aVector; aStayForSeconds; }
-		static void DrawBox(DragonEngine::Vector2f aPosition, DragonEngine::Vector2f aSize, float aStayForSeconds = 0.0f) noexcept { aPosition; aSize; aStayForSeconds; }
-		static void DrawLine(DragonEngine::Vector2f aStart, DragonEngine::Vector2f aEnd, float aStayForSeconds = 0.0f) noexcept { aStart; aEnd; aStayForSeconds; }
-		static void DrawCircle(DragonEngine::Vector2f aCenter, float aRadius, float aStayForSeconds = -1.0f) noexcept { aCenter; aRadius; aStayForSeconds; }
+		static void DrawPoint(DragonEngine::Vector2f aVector, Color aColor = Color::Red, float aStayForSeconds = 0.0f) noexcept { aVector; aColor; aStayForSeconds; }
+		static void DrawBox(DragonEngine::Vector2f aPosition, DragonEngine::Vector2f aSize, Color aColor = Color::Red, float aStayForSeconds = 0.0f) noexcept { aPosition; aColor; aSize; aStayForSeconds; }
+		static void DrawLine(DragonEngine::Vector2f aStart, DragonEngine::Vector2f aEnd, Color aColor = Color::Red, float aStayForSeconds = 0.0f) noexcept { aStart; aEnd; aColor; aStayForSeconds; }
+		static void DrawCircle(DragonEngine::Vector2f aCenter, float aRadius, Color aColor = Color::Red, float aStayForSeconds = -1.0f) noexcept { aCenter; aRadius; aColor; aStayForSeconds; }
 #endif
 
 	private:
@@ -66,6 +64,8 @@ namespace DragonEngine
 		Debug(const Debug&) = delete;
 		Debug& operator=(const Debug&) = delete;
 		~Debug() {}
+
+		void RenderInternal(SDL_Renderer* aRenderer);
 
 		inline static Debug* myInstance = nullptr;
 
