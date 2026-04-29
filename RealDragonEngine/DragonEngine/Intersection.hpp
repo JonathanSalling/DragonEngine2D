@@ -1,8 +1,8 @@
 #pragma once
 #include "Plane.hpp"
 #include "Ray.hpp"
-#include "BoxCollider.hpp"
-#include "SphereCollider.hpp"
+#include "BoxCollider.h"
+#include "SphereCollider.h"
 
 namespace DragonEngine
 {
@@ -43,10 +43,7 @@ namespace DragonEngine
 	template<typename T>
 	bool IntersectionSphereRay(const SphereCollider& aSphere, const Ray<T>& aRay)
 	{
-		
-		Ray<T> origi = aRay;
 		Vector3<T> originToSphere = aSphere.GetCenter() - aRay.GetOrigin();
-		Vector3<T> hej = aRay.GetDirection();
 		T dotDir = originToSphere.Dot(aRay.GetDirection());
 
 		if (dotDir <= 0.0f)
@@ -57,7 +54,5 @@ namespace DragonEngine
 		Vector3<T> closestToSphere = aRay.GetDirection() * dotDir;
 
 		return (originToSphere.LengthSqr() - closestToSphere.LengthSqr()) <= (aSphere.GetRadius() * aSphere.GetRadius());
-
-		return true;
 	}
 }
