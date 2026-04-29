@@ -23,7 +23,7 @@ namespace DragonEngine
 	Plane<T>::Plane()
 	{
 		myPoint = Vector3<T>(0, 0, 0);
-		myNormal = Vector3<T>(0, 0, 0);
+		myNormal = Vector3<T>(0, 1, 0);
 	}
 
 	template <class T>
@@ -57,25 +57,25 @@ namespace DragonEngine
 	template <class T>
 	bool Plane<T>::IsInside(const Vector3<T>& aPosition) const
 	{
-		/*Vector3<T> dir = aPosition - myPoint;
-		return dir.Dot(GetNormal()) < 0;*/
+		const Vector3<T> myDirection = aPosition - myPoint;
 
-		Vector3<T> myDirection = aPosition - myPoint;
-		if (myDirection.Dot(GetNormal()) < 0)
+		const T dotProduct = myDirection.Dot(GetNormal());
+
+		if (dotProduct < 0)
 		{
 			return true;
 		}
-		else if (myDirection.Dot(GetNormal()) > 0)
+		else if (dotProduct > 0)
 		{
 			return false;
 		}
+		return true; // If the dot product is 0, the position is exactly on the plane, we consider it to be inside
 	}
 
 	template <class T>
 	const Vector3<T>& Plane<T>::GetNormal() const
 	{
 		return myNormal;
-
 	}
 
 	template<class T>
