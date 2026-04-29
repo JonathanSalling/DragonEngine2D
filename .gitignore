@@ -58,3 +58,4 @@
 /SolarSystem Version/lib/SDL3/x64/optional
 /SolarSystem Version/lib/SDL3/x86/optional
 /SolarSystem Version/lib/SDL3/arm64
+*.res
