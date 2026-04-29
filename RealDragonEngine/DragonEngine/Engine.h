@@ -29,8 +29,8 @@ namespace DragonEngine
 		unsigned short GetWindowWidth() const { return myWindowWidth; }
 		unsigned short GetWindowHeight() const { return myWindowHeight; }
 
-		const unsigned short GetRenderWidth() const { return myRenderWidth; }
-		const unsigned short GetRenderHeight() const { return myRenderHeight; }
+		unsigned short GetRenderWidth() const { return myRenderWidth; }
+		unsigned short GetRenderHeight() const { return myRenderHeight; }
 		Vector2<unsigned int> GetRenderResolution() const { return { myRenderWidth, myRenderHeight }; }
 
 		Vector2f NormalSpaceToScreenSpace(Vector2f const& aNormalizedVector) const 
