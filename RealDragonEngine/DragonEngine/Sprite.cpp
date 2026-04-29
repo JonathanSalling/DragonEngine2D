@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include <SDL3_image/SDL_image.h>
 #include "EngineUtilities.h"
+#include "Timer.hpp"
 
 DragonEngine::Sprite::Sprite() :
 	myTexture(nullptr),
@@ -11,7 +12,14 @@ DragonEngine::Sprite::Sprite() :
 	myRotation(0.0),					// Rotation in degrees (clockwise)
 	myColor(255.f, 255.f, 255.f, 255.f), // default to white (no tint)
 	myWidth(0),
-	myHeight(0)
+	myHeight(0),
+	myIsSpriteSheet(false),
+	myRowsCount(1),
+	myColumnsCount(1),
+	myFrameCount(1),
+	myCurrentFrame(0),
+	myTimer(0.f),
+	myIsPlaying(true)
 {
 }
 
@@ -56,6 +64,7 @@ bool DragonEngine::Sprite::LoadTexture(const std::string& aPath)
 
 	SDL_Renderer* renderer = Engine::GetInstance().GetRenderer();
 	myTexture = SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_DestroySurface(surface);
 	if (!myTexture)
 	{
 		SDL_Log("Failed to create texture from surface: %s", SDL_GetError());
@@ -72,8 +81,7 @@ bool DragonEngine::Sprite::LoadTexture(const std::string& aPath)
 
 	SDL_SetTextureBlendMode(myTexture, SDL_BLENDMODE_BLEND);
 
-	SDL_DestroySurface(surface);
-	return myTexture != nullptr;
+	return true;
 }
 
 void DragonEngine::Sprite::SetPivot(const DragonEngine::Vector2<float>& aPivot)
@@ -91,9 +99,9 @@ DragonEngine::Color DragonEngine::Sprite::GetColor() const
 	return myColor;
 }
 
-void DragonEngine::Sprite::SetScale(const DragonEngine::Vector2<float>& aSize)
+void DragonEngine::Sprite::SetScale(const DragonEngine::Vector2<float>& aScale)
 {
-	myScale = aSize;
+	myScale = aScale;
 }
 
 void DragonEngine::Sprite::SetRotation(const double rotation)
@@ -104,6 +112,38 @@ void DragonEngine::Sprite::SetRotation(const double rotation)
 double DragonEngine::Sprite::GetRotation() const
 {
 	return myRotation;
+}
+
+void DragonEngine::Sprite::SetAnimationFPS(float aFramesPerSecond)
+{
+	myFrameTime = 1.0f / aFramesPerSecond;
+}
+
+void DragonEngine::Sprite::SetFrame(int frameIndex)
+{
+	myCurrentFrame = frameIndex % myFrameCount; // Wrap around if frameIndex exceeds frame count
+}
+
+void DragonEngine::Sprite::Play()
+{
+	myIsPlaying = true;
+}
+
+void DragonEngine::Sprite::Pause()
+{
+	myIsPlaying = false;
+}
+
+void DragonEngine::Sprite::Stop()
+{
+	myIsPlaying = false;
+	myCurrentFrame = 0;
+	myTimer = 0.f;
+}
+
+void DragonEngine::Sprite::SetLooping(bool aShouldLoop)
+{
+	myLooping = aShouldLoop;
 }
 
 void DragonEngine::Sprite::SetColor(const DragonEngine::Color& aColor)
@@ -126,8 +166,8 @@ DragonEngine::Vector2<float> DragonEngine::Sprite::GetNormalizedSize() const
 	const float renderWidth = static_cast<float>(Engine::GetInstance().GetRenderWidth());
 	const float renderHeight = static_cast<float>(Engine::GetInstance().GetRenderHeight());
 
-	const float pixelWidth = myTexture->w * myScale.x;
-	const float pixelHeight = myTexture->h * myScale.y;
+	const float pixelWidth = myWidth * myScale.x;
+	const float pixelHeight = myHeight * myScale.y;
 
 	return { pixelWidth / renderWidth,pixelHeight / renderHeight };
 }
@@ -151,20 +191,14 @@ void DragonEngine::Sprite::ClearSpriteSheet()
 
 SDL_FRect DragonEngine::Sprite::GetRect(int frameIndex) const
 {
-	float width, height;
-	SDL_GetTextureSize(myTexture, &width, &height);
-
-	float cellWidth = width / myColumnsCount;
-	float cellHeight = height / myRowsCount;
-
 	int row = frameIndex / myColumnsCount;
 	int column = frameIndex % myColumnsCount;
 
 	SDL_FRect rect = {
-		column * cellWidth,
-		row * cellHeight,
-		cellWidth,
-		cellHeight
+		static_cast<float>(column * myCellWidth),
+		static_cast<float>(row * myCellHeight),
+		static_cast<float>(myCellWidth),
+		static_cast<float>(myCellHeight)
 	};
 
 	return rect;
@@ -186,7 +220,7 @@ void DragonEngine::Sprite::Update(float aDeltaTime)
 
 		if (myCurrentFrame >= myFrameCount)
 		{
-			if (myLoop)
+			if (myLooping)
 			{
 				myCurrentFrame = 0;
 			}
@@ -198,8 +232,14 @@ void DragonEngine::Sprite::Update(float aDeltaTime)
 	}
 }
 
-void DragonEngine::Sprite::SetSpriteSheet(int rows, int cols)
+void DragonEngine::Sprite::SetSpriteSheet(int aRowCount, int aColumnCount, int aFrameCount)
 {
+	myCurrentFrame = 0;
+	myTimer = 0.f;
+
+	myCellWidth = myWidth / aColumnCount;
+	myCellHeight = myHeight / aRowCount;
+
 	if (!myTexture)
 	{
 		SDL_Log("Cannot set sprite sheet on a sprite without a texture.");
@@ -208,10 +248,10 @@ void DragonEngine::Sprite::SetSpriteSheet(int rows, int cols)
 
 	myIsSpriteSheet = true;
 
-	myRowsCount = rows;
-	myColumnsCount = cols;
+	myRowsCount = aRowCount;
+	myColumnsCount = aColumnCount;
 
-	myFrameCount = rows * cols;
+	myFrameCount = aFrameCount;
 	myCurrentFrame = 0;
 }
 
@@ -230,8 +270,8 @@ void DragonEngine::Sprite::Render() const
 	SDL_FRect destinationRect;
 
 	// Convert normalized scale to pixel size
-	destinationRect.w = myScale.x * myTexture->w;
-	destinationRect.h = myScale.y * myTexture->h;
+	destinationRect.w = myScale.x * myWidth;
+	destinationRect.h = myScale.y * myHeight;
 
 	// Convert normalized screen position to pixel space
 	// Pivot shifts the origin inside the sprite
@@ -242,10 +282,11 @@ void DragonEngine::Sprite::Render() const
 	center.x = destinationRect.w * center.x;
 	center.y = destinationRect.h * center.y;
 
+	// If this is a sprite sheet, calculate the source rectangle for the current frame
 	SDL_FRect* srcRect = nullptr;
-	SDL_FRect tempRect;
 	if (myIsSpriteSheet)
 	{
+		SDL_FRect tempRect;
 		tempRect = GetRect(myCurrentFrame);
 		srcRect = &tempRect;
 	}

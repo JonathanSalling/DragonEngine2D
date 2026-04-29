@@ -36,8 +36,6 @@ namespace DragonEngine
 
 	class Sprite
 	{
-		friend class SpriteSheet;
-
 	public:
 
 		// Creates an empty sprite.
@@ -50,59 +48,66 @@ namespace DragonEngine
 		// Destroys the sprite and frees its texture.
 		~Sprite();
 
-		// Each sprite owns its own texture; copying is not allowed to avoid crashes.
+		// Deleted copy and move constructors and assignment operators to prevent copying or moving the sprite,
+		// which would cause issues with the owned SDL_Texture.
 		Sprite(const Sprite&) = delete;
 		Sprite& operator=(const Sprite&) = delete;
+		Sprite(Sprite&&) = delete;
+		Sprite& operator=(Sprite&&) = delete;
+
+		// Updates the sprite's animation frame based on the elapsed time (deltaTime in seconds).
+		void Update(float aDeltaTime);
+		// Renders the sprite to the screen.
+		void Render() const;
 
 		// Sets the position of the sprite in normalized screen space.
 		void SetPosition(const DragonEngine::Vector2<float>& aPosition);
 		// Gets the position of the sprite in normalized screen space.
 		const DragonEngine::Vector2<float>& GetPosition() const;
 
-		// Clears the source rectangle, causing the entire texture to be rendered.
-		void ClearSpriteSheet();
-
-		// Updates the sprite's animation frame based on the elapsed time (deltaTime in seconds).
-		void Update(float aDeltaTime);
-
-		// Sets the sprite sheet for animation (optional).
-		void SetSpriteSheet(int rows, int cols);
-
-		// Renders the sprite to the screen.
-		void Render() const;
-
 		// Sets the pivot point of the sprite (normalized 0 to 1).
 		void SetPivot(const DragonEngine::Vector2<float>& aPivot);
-
 		// Gets the pivot point of the sprite (normalized 0 to 1).
 		DragonEngine::Vector2<float> GetPivot() const;
 
+		// Gets the scale of the sprite (relative to original size).
+		DragonEngine::Vector2<float> GetScale() const;
 		// Sets the scale of the sprite (relative to original size).
 		void SetScale(const DragonEngine::Vector2<float>& aScale);
 
 		// Sets the color of the sprite (RGB values from 0 to 255).
 		void SetColor(const DragonEngine::Color& aColor);
-
 		// Gets the color of the sprite (RGB values from 0 to 255).
 		DragonEngine::Color GetColor() const;
 
-		// Gets the scale of the sprite (relative to original size).
-		DragonEngine::Vector2<float> GetScale() const;
-
 		// Returns the sprite's size in normalized screen space.
 		DragonEngine::Vector2<float> GetNormalizedSize() const;
-
 		// Returns the native texture size in pixels (ignores scale)
 		DragonEngine::Vector2<int> GetPixelSize() const;
-
 		// Returns the sprite's size in pixels after applying scale.
 		DragonEngine::Vector2<int> GetScaledPixelSize() const;
 
 		// Sets the rotation of the sprite in degrees.
 		void SetRotation(const double rotation);
-
 		// Gets the rotation of the sprite in degrees.
 		double GetRotation() const;
+
+		// Sets the sprite sheet for animation (optional).
+		void SetSpriteSheet(int aRowCount, int aColumnCount, int aFrameCount);
+		// Clears the source rectangle, causing the entire texture to be rendered.
+		void ClearSpriteSheet();
+		// Sets the animation speed in seconds per frame (for sprite sheets).
+		void SetAnimationFPS(float aFramesPerSecond);
+		// Sets the current animation frame (for sprite sheets).
+		void SetFrame(int frameIndex);
+		// Starts or resumes the animation (for sprite sheets).
+		void Play();
+		// Pauses the animation (for sprite sheets).
+		void Pause();
+		// Stops the animation and resets to the first frame (for sprite sheets).
+		void Stop();
+		// Sets whether the animation should loop when it reaches the end (for sprite sheets).
+		void SetLooping(bool aShouldLoop);
 
 	private:
 		// Loads a texture from the given file path.
@@ -122,14 +127,13 @@ namespace DragonEngine
 		int myHeight;
 
 		// Optional animation properties
-		int myRowsCount;
-		int myColumnsCount;
+		int myRowsCount = 1, myColumnsCount = 1, myCellWidth = 0, myCellHeight = 0;
 		bool myIsSpriteSheet = false;
 		int myCurrentFrame = 0;
 		int myFrameCount = 1;
 		float myFrameTime = 0.1f;   // seconds per frame
 		float myTimer = 0.0f;
 		bool myIsPlaying = true;
-		bool myLoop = true;
+		bool myLooping = true;
 	};
 }
