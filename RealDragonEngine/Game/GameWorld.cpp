@@ -21,7 +21,7 @@ void GameWorld::Initialize()
 {
 	myDragonEngineLogoSprite = new DragonEngine::Sprite("Sprites/DragonEngine.png");
 
-	myDragonEngineLogoSprite->SetSpriteSheet(2, 2);
+	myDragonEngineLogoSprite->SetSpriteSheet(2, 2, 4);
 
 	myDragonEngineLogoSprite->SetPosition({ 0.5f, 0.5f });
 	myDragonEngineLogoSprite->SetScale({ 0.75f, 0.75f });
