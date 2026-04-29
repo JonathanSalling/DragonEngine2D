@@ -47,5 +47,3 @@ namespace DragonEngine
 	};
 }
 
-//namespace DE = DragonEngine;
-
