@@ -13,9 +13,9 @@ namespace DragonEngine
 		T y = 0;
 		T z = 0;
 		//Creates a null-vector
-		Vector3<T>();
+		Vector3<T>() = default;
 		//Creates a vector (aX, aY, aZ)
-		Vector3<T>(const T& aX, const T& aY, const T& aZ);
+		Vector3<T>(T aX, T aY, T aZ);
 		//Copy constructor (compiler generated)
 		Vector3<T>(const Vector3<T>& aVector) = default;
 		//Assignment operator (compiler generated)
@@ -39,6 +39,11 @@ namespace DragonEngine
 	template <class T> Vector3<T> operator+(const Vector3<T>& aVector0, const Vector3<T>& aVector1)
 	{
 		return Vector3<T>(aVector0.x + aVector1.x, aVector0.y + aVector1.y, aVector0.z + aVector1.z);
+	}
+	//Returns the negation of aVector
+	template <class T> Vector3<T> operator-(const Vector3<T>& aVector)
+	{
+		return Vector3<T>(-aVector.x, -aVector.y, -aVector.z);
 	}
 	//Returns the vector difference of aVector0 and aVector1
 	template <class T> Vector3<T> operator-(const Vector3<T>& aVector0, const Vector3<T>& aVector1)
@@ -97,11 +102,7 @@ namespace DragonEngine
 		return aVector;
 	}
 	template<class T>
-	inline Vector3<T>::Vector3() : x(0), y(0), z(0)
-	{
-	}
-	template<class T>
-	inline Vector3<T>::Vector3(const T& aX, const T& aY, const T& aZ)
+	inline Vector3<T>::Vector3(T aX, T aY, T aZ)
 	{
 		x = aX;
 		y = aY;

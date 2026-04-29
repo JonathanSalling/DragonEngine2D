@@ -9,11 +9,11 @@ namespace DragonEngine
 	class Vector2
 	{
 	public:
-		T x, y;
+		T x{}, y{};
 		//Creates a null-vector
 		Vector2<T>() = default;
 		//Creates a vector (aX, aY)
-		Vector2<T>(const T& aX, const T& aY);
+		Vector2<T>(T aX, T aY);
 		//Copy constructor (compiler generated)
 		Vector2<T>(const Vector2<T>& aVector) = default;
 		//Assignment operator (compiler generated)
@@ -35,6 +35,11 @@ namespace DragonEngine
 	template <class T> Vector2<T> operator+(const Vector2<T>& aVector0, const Vector2<T>& aVector1)
 	{
 		return Vector2<T>(aVector0.x + aVector1.x, aVector0.y + aVector1.y);
+	}
+	//Returns the negation of aVector
+	template <class T> Vector2<T> operator-(const Vector2<T>& aVector)
+	{
+		return Vector2<T>(-aVector.x, -aVector.y);
 	}
 	//Returns the vector difference of aVector0 and aVector1
 	template <class T> Vector2<T> operator-(const Vector2<T>& aVector0, const Vector2<T>& aVector1)
@@ -89,7 +94,7 @@ namespace DragonEngine
 		return aVector;
 	}
 	template<class T>
-	inline Vector2<T>::Vector2(const T& aX, const T& aY)
+	inline Vector2<T>::Vector2(T aX, T aY)
 	{
 		x = aX;
 		y = aY;
