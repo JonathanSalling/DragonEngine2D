@@ -92,6 +92,9 @@ namespace DragonEngine
 		// Gets the rotation of the sprite in degrees.
 		double GetRotation() const;
 
+
+		// Functions related to spritesheet usage
+
 		// Sets the sprite sheet for animation (optional).
 		void SetSpriteSheet(int aRowCount, int aColumnCount, int aFrameCount);
 		// Clears the source rectangle, causing the entire texture to be rendered.
