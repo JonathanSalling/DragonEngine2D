@@ -7,7 +7,7 @@
 #define SAFE_DELETE(aPointer) delete aPointer; aPointer = nullptr;
 
 DragonEngine::Engine::Engine() : myRenderer(nullptr), myWindow(nullptr),
-myWindowWidth(1280), myWindowHeight(720), 
+myWindowWidth(1600), myWindowHeight(900), 
 myRenderWidth(myWindowWidth), myRenderHeight(myWindowHeight)
 {
 }

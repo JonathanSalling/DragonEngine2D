@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+#include <SphereCollider.h>
+#include "BoxCollider.h"
 
 namespace DragonEngine
 {
@@ -18,5 +20,10 @@ public:
 
 private:
 	DragonEngine::Sprite* myDragonEngineLogoSprite;
+
+	DragonEngine::BoxCollider tempCollider;
+	DragonEngine::BoxCollider tempCollider2;	
+	DragonEngine::SphereCollider tempCollider3;
+	DragonEngine::SphereCollider tempCollider4;
 };
 
