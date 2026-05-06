@@ -88,7 +88,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\lib\SDL3\$(Platform);$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)bin</OutDir>
+    <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)Intermediate\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
   </PropertyGroup>
