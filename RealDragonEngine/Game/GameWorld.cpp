@@ -1,3 +1,4 @@
+#include "Text.h"
 #include "GameWorld.h"
 #include "Sprite.h"
 #include <InputManager.h>
@@ -80,6 +81,11 @@ void GameWorld::Render()
 	// Write rendering logic here
 
 	myDragonEngineLogoSprite->Render();
+
+	DragonEngine::Text temp = DragonEngine::Text("Hello World!", 100);
+	temp.SetPosition({ 0.5f,0.5f });
+	temp.SetPivot({ 0.5f,0.5f });
+	temp.Render();
 
 	DragonEngine::Debug::Render(DragonEngine::Engine::GetInstance().GetRenderer());
 }
