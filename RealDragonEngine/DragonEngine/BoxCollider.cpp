@@ -2,6 +2,7 @@
 #include "Debug.h"
 #include "SphereCollider.h"
 #include "TemplateUtilities.h"
+#include "Engine.h"
 
 DragonEngine::BoxCollider::BoxCollider() : myCenter{ 0, 0 }, myHalfSize{ 0.f, 0.f }, Collider() // Call base class default constructor to initialize enabled state and name
 {
@@ -51,22 +52,45 @@ bool DragonEngine::BoxCollider::Intersects(const Collider& other) const
 
 bool DragonEngine::BoxCollider::IntersectsBox(const BoxCollider& aBoxCollider) const
 {
-	return std::abs(myCenter.x - aBoxCollider.myCenter.x) <= (myHalfSize.x + aBoxCollider.myHalfSize.x) &&
-		std::abs(myCenter.y - aBoxCollider.myCenter.y) <= (myHalfSize.y + aBoxCollider.myHalfSize.y);
+	Vector2f screenCenter = Engine::GetInstance().NormalSpaceToScreenSpace(myCenter);
+	Vector2f otherScreenCenter = Engine::GetInstance().NormalSpaceToScreenSpace(aBoxCollider.myCenter);
+
+	Vector2f screenSize = {
+		myHalfSize.x * Engine::GetInstance().GetRenderWidth(),
+		myHalfSize.y * Engine::GetInstance().GetRenderHeight()
+	};
+
+	Vector2f otherScreenSize = {
+		aBoxCollider.myHalfSize.x * Engine::GetInstance().GetRenderWidth(),
+		aBoxCollider.myHalfSize.y * Engine::GetInstance().GetRenderHeight()
+	};
+
+	return std::abs(screenCenter.x - otherScreenCenter.x) <= (screenSize.x + otherScreenSize.x) &&
+		std::abs(screenCenter.y - otherScreenCenter.y) <= (screenSize.y + otherScreenSize.y);
 }
 
 bool DragonEngine::BoxCollider::IntersectsSphere(const SphereCollider& aSphereCollider) const
 {
-	Vector2f min = { myCenter.x - myHalfSize.x, myCenter.y - myHalfSize.y };
-	Vector2f max = { myCenter.x + myHalfSize.x, myCenter.y + myHalfSize.y };
+	Vector2f screenCenter = Engine::GetInstance().NormalSpaceToScreenSpace(myCenter);
+	Vector2f otherSphereCenter = Engine::GetInstance().NormalSpaceToScreenSpace(aSphereCollider.GetCenter());
+
+	Vector2f screenHalfSize = {
+		myHalfSize.x * Engine::GetInstance().GetRenderWidth(),
+		myHalfSize.y * Engine::GetInstance().GetRenderHeight()
+	};
+
+	float radius = aSphereCollider.GetRadius() * Engine::GetInstance().GetRenderHeight();
+
+	Vector2f min = screenCenter - screenHalfSize;
+	Vector2f max = screenCenter + screenHalfSize;
 
 	Vector2f closest;
-	closest.x = DragonEngine::Max(min.x, DragonEngine::Min(aSphereCollider.GetCenter().x, max.x));
-	closest.y = DragonEngine::Max(min.y, DragonEngine::Min(aSphereCollider.GetCenter().y, max.y));
+	closest.x = std::max(min.x, std::min(otherSphereCenter.x, max.x));
+	closest.y = std::max(min.y, std::min(otherSphereCenter.y, max.y));
 
-	Vector2f dir = closest - aSphereCollider.GetCenter();
+	Vector2f dir = otherSphereCenter - closest;
 
-	return dir.LengthSqr() <= aSphereCollider.GetRadius() * aSphereCollider.GetRadius();
+	return dir.LengthSqr() <= radius * radius;
 }
 
 DragonEngine::Vector2f DragonEngine::BoxCollider::GetCenter() const

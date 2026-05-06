@@ -1,6 +1,7 @@
 #include "BoxCollider.h"
 #include "Debug.h"
 #include "SphereCollider.h"
+#include "Engine.h"
 
 DragonEngine::SphereCollider::SphereCollider() : myCenter{ 0,0 }, myRadius(0), Collider() // Call base class default constructor to initialize enabled state and name
 {
@@ -75,10 +76,17 @@ bool DragonEngine::SphereCollider::IntersectsBox(const BoxCollider& other) const
 
 bool DragonEngine::SphereCollider::IntersectsSphere(const SphereCollider& other) const
 {
-	Vector2f distance = other.GetCenter() - myCenter;
-	float radius = myRadius + other.GetRadius();
+	DragonEngine::Vector2f screenCenter = Engine::GetInstance().NormalSpaceToScreenSpace(myCenter);
+	DragonEngine::Vector2f otherScreenCenter = Engine::GetInstance().NormalSpaceToScreenSpace(other.GetCenter());
 
-	return distance.LengthSqr() <= (radius * radius);
+	DragonEngine::Vector2f distance = otherScreenCenter - screenCenter;
+
+	float screenRadius = myRadius * Engine::GetInstance().GetRenderHeight();
+	float otherScreenRadius = other.GetRadius() * Engine::GetInstance().GetRenderHeight();
+
+	float r = screenRadius + otherScreenRadius;
+
+	return distance.LengthSqr() <= r * r;
 }
 
 DragonEngine::Vector2f DragonEngine::SphereCollider::GetCenter() const
