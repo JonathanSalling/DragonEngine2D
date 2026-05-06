@@ -40,7 +40,6 @@ void GameWorld::Initialize()
 	myMusic = new DragonEngine::Audio("Sounds/music.mp3");
 	mySoundEffect = new DragonEngine::Audio("Sounds/anime.mp3");
 
-	
 	myMusic->Play(true); // Set music to loop indefinitely and play it
 	myMusic->SetLoops(-1);
 	myMusic->SetVolume(2.5f); // Set music volume to 50%
