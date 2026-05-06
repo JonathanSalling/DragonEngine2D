@@ -2,6 +2,7 @@
 #include <SDL3/SDL_render.h>
 #include "SDL3/SDL_log.h"
 #include <SDL3_image/SDL_image.h>
+#include <SDL3_ttf/SDL_ttf.h>
 #include "Debug.h"
 
 #define SAFE_DELETE(aPointer) delete aPointer; aPointer = nullptr;
@@ -20,6 +21,8 @@ DragonEngine::Engine::~Engine()
 int DragonEngine::Engine::Start()
 {
 	SDL_SetAppMetadata("Example Renderer Clear", "1.0", "com.example.renderer-clear");
+
+	TTF_Init();
 
 	if (!SDL_Init(SDL_INIT_VIDEO))
 	{
@@ -44,6 +47,7 @@ void DragonEngine::Engine::Shutdown()
 	/* SDL will clean up the window/renderer for us. */
 	if (myRenderer) { SDL_DestroyRenderer(myRenderer); myRenderer = NULL; }
 	if (myWindow) { SDL_DestroyWindow(myWindow);  myWindow = NULL; }
+	TTF_Quit();
 	SDL_Quit();
 }
 
