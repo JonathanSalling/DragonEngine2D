@@ -33,7 +33,6 @@ namespace DragonEngine
 	 * The Sprite class hides all SDL rendering details so that
 	 * game code never needs to interact with SDL_Renderer directly.
 	 */
-
 	class Sprite
 	{
 	public:
@@ -102,6 +101,7 @@ namespace DragonEngine
 		// Sets the animation speed in seconds per frame (for sprite sheets).
 		void SetAnimationFPS(float aFramesPerSecond);
 		// Sets the current animation frame (for sprite sheets).
+		// Starts at 0. If the frame index is out of range, it will be wrapped around.
 		void SetFrame(int frameIndex);
 		// Starts or resumes the animation (for sprite sheets).
 		void Play();

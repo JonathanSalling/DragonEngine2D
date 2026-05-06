@@ -66,7 +66,7 @@ void DragonEngine::Audio::Stop(int aFadeOutSeconds)
 	{
 		return;
 	}
-	MIX_StopTrack(myTrack, aFadeOutSeconds);
+	MIX_StopTrack(myTrack, MIX_TrackMSToFrames(myTrack, aFadeOutSeconds * 1000));
 }
 
 void DragonEngine::Audio::Pause()

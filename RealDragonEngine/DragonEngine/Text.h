@@ -8,6 +8,7 @@ struct TTF_Font;
 
 namespace DragonEngine
 {
+	// The Text class represents a renderable text object in the game world.
 	class Text
 	{
     public:
@@ -35,7 +36,9 @@ namespace DragonEngine
         // Does NOT trigger texture rebuild since it only affects rendering.
         void SetPivot(const Vector2f& aPivot);
 
+		// Sets the position of the text in normalized screen space (0–1).
         void SetPosition(const Vector2f& aPosition);
+		// Sets the scale of the text. (1,1) is normal size.
         void SetScale(const Vector2f& aScale);
 
         // Renders the text to the screen.
@@ -43,6 +46,7 @@ namespace DragonEngine
         void Render();
 
     private:
+		// Rebuilds the SDL_Texture from the current text, font, and color.
         void UpdateTexture();
 
         std::string myText;
