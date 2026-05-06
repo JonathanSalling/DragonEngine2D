@@ -3,6 +3,7 @@
 #include "SDL3/SDL_log.h"
 #include <SDL3_image/SDL_image.h>
 #include <SDL3_ttf/SDL_ttf.h>
+#include <SDL3_mixer/SDL_mixer.h>
 #include "Debug.h"
 
 #define SAFE_DELETE(aPointer) delete aPointer; aPointer = nullptr;
@@ -21,12 +22,28 @@ DragonEngine::Engine::~Engine()
 int DragonEngine::Engine::Start()
 {
 	SDL_SetAppMetadata("Example Renderer Clear", "1.0", "com.example.renderer-clear");
-
-	TTF_Init();
-
-	if (!SDL_Init(SDL_INIT_VIDEO))
+	if (SDL_Init(SDL_INIT_VIDEO) == false)
 	{
 		SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
+		return SDL_APP_FAILURE;
+	}
+
+	if (TTF_Init() == false)
+	{
+		SDL_Log("Couldn't initialize SDL_TTF: %s", SDL_GetError());
+		return SDL_APP_FAILURE;
+	}
+
+	if (!MIX_Init()) 
+	{
+		SDL_Log("Couldn't init SDL_mixer library: %s", SDL_GetError());
+		return SDL_APP_FAILURE;
+	}
+
+	myMixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
+	if (!myMixer) 
+	{
+		SDL_Log("Couldn't create mixer on default device: %s", SDL_GetError());
 		return SDL_APP_FAILURE;
 	}
 
@@ -44,10 +61,18 @@ int DragonEngine::Engine::Start()
 
 void DragonEngine::Engine::Shutdown()
 {
+	if (myMixer)
+	{
+		MIX_DestroyMixer(myMixer);
+		myMixer = nullptr;
+	}
+	MIX_Quit();
+
+	TTF_Quit();
+
 	/* SDL will clean up the window/renderer for us. */
 	if (myRenderer) { SDL_DestroyRenderer(myRenderer); myRenderer = NULL; }
 	if (myWindow) { SDL_DestroyWindow(myWindow);  myWindow = NULL; }
-	TTF_Quit();
 	SDL_Quit();
 }
 

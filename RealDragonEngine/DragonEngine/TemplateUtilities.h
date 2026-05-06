@@ -52,7 +52,7 @@ namespace DragonEngine
 		else
 			return aValue;
 
-		return aValue; // Default return to avoid compiler warning, should never be reached due to the above conditions
+		//return aValue; // Default return to avoid compiler warning, should never be reached due to the above conditions
 	}
 
 	template <typename T> // linear interpolation between two values

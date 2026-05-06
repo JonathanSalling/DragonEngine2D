@@ -169,6 +169,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\SDL3\SDL.h" />
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionSystem.h" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Timer.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />

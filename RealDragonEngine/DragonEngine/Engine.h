@@ -3,6 +3,7 @@
 
 struct SDL_Renderer;
 struct SDL_Window;
+struct MIX_Mixer;
 
 namespace DragonEngine
 {
@@ -25,6 +26,7 @@ namespace DragonEngine
 
 		SDL_Renderer* GetRenderer() const { return myRenderer; }
 		SDL_Window* GetWindow() const { return myWindow; }
+		MIX_Mixer* GetMixer() const { return myMixer; }
 
 		unsigned short GetWindowWidth() const { return myWindowWidth; }
 		unsigned short GetWindowHeight() const { return myWindowHeight; }
@@ -33,15 +35,17 @@ namespace DragonEngine
 		unsigned short GetRenderHeight() const { return myRenderHeight; }
 		Vector2<unsigned int> GetRenderResolution() const { return { myRenderWidth, myRenderHeight }; }
 
-		Vector2f NormalSpaceToScreenSpace(Vector2f const& aNormalizedVector) const 
+		Vector2f NormalSpaceToScreenSpace(Vector2f const& aNormalizedVector) const
 		{
 			return { aNormalizedVector.x * myRenderWidth, aNormalizedVector.y * myRenderHeight };
 		}
 
 	private:
 		/* We will use this renderer to draw into this window every frame. */
-		SDL_Renderer* myRenderer;
-		SDL_Window* myWindow;
+		SDL_Renderer* myRenderer = NULL;
+		SDL_Window* myWindow = NULL;
+		MIX_Mixer* myMixer = NULL;
+
 
 		/* How big should the window be? */
 		unsigned short myWindowWidth;

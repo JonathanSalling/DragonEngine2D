@@ -6,6 +6,7 @@
 namespace DragonEngine
 {
 	class Sprite;
+	class Audio;
 	class InputManager;
 }
 
@@ -21,9 +22,7 @@ public:
 private:
 	DragonEngine::Sprite* myDragonEngineLogoSprite;
 
-	DragonEngine::BoxCollider tempCollider;
-	DragonEngine::BoxCollider tempCollider2;	
-	DragonEngine::SphereCollider tempCollider3;
-	DragonEngine::SphereCollider tempCollider4;
+	DragonEngine::Audio* myMusic;
+	DragonEngine::Audio* mySoundEffect;
 };
 

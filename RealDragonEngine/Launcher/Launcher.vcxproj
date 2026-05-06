@@ -112,7 +112,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;Game.lib</AdditionalDependencies>
+      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;SDL3_mixer.lib;Game.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\Game\$(Configuration)\$(Platform);$(SolutionDir)lib\DragonGame\$(Configuration)\$(Platform);$(SolutionDir)\lib\DragonUtilities\$(configuration)\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -131,7 +131,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;Game.lib</AdditionalDependencies>
+      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;SDL3_mixer.lib;Game.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\Game\$(Configuration)\$(Platform);$(SolutionDir)lib\DragonGame\$(Configuration)\$(Platform);$(SolutionDir)\lib\DragonUtilities\$(configuration)\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -148,7 +148,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;Game.lib</AdditionalDependencies>
+      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;SDL3_mixer.lib;Game.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\Game\$(Configuration)\$(Platform);$(SolutionDir)lib\DragonGame\$(Configuration)\$(Platform);$(SolutionDir)\lib\DragonUtilities\$(configuration)\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -167,7 +167,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;Game.lib</AdditionalDependencies>
+      <AdditionalDependencies>SDL3.lib;SDL3_image.lib;SDL3_ttf.lib;SDL3_mixer.lib;Game.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\Game\$(Configuration)\$(Platform);$(SolutionDir)lib\DragonGame\$(Configuration)\$(Platform);$(SolutionDir)\lib\DragonUtilities\$(configuration)\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
