@@ -79,14 +79,14 @@ bool DragonEngine::SphereCollider::IntersectsSphere(const SphereCollider& other)
 	DragonEngine::Vector2f screenCenter = Engine::GetInstance().NormalSpaceToScreenSpace(myCenter);
 	DragonEngine::Vector2f otherScreenCenter = Engine::GetInstance().NormalSpaceToScreenSpace(other.GetCenter());
 
-	DragonEngine::Vector2f distance = otherScreenCenter - screenCenter;
+	DragonEngine::Vector2f screenDistance = otherScreenCenter - screenCenter;
 
 	float screenRadius = myRadius * Engine::GetInstance().GetRenderHeight();
 	float otherScreenRadius = other.GetRadius() * Engine::GetInstance().GetRenderHeight();
 
-	float r = screenRadius + otherScreenRadius;
+	float totalScreenRadius = screenRadius + otherScreenRadius;
 
-	return distance.LengthSqr() <= r * r;
+	return screenDistance.LengthSqr() <= totalScreenRadius * totalScreenRadius;
 }
 
 DragonEngine::Vector2f DragonEngine::SphereCollider::GetCenter() const
