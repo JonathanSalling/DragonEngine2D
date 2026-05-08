@@ -68,20 +68,20 @@ namespace DragonEngine
 		bool IsMouseReleased(MouseButton button) const;
 
 		// Current mouse position in window coordinates
-		DragonEngine::Vector2<int> GetMousePosition() const;
+		DragonEngine::Vector2<float> GetMousePosition() const;
 
 		// Mouse movement delta since last frame
-		Vector2<int> GetMouseDelta() const;
+		Vector2<float> GetMouseDelta() const;
 
 		// Mouse wheel delta since last frame
 		int GetMouseWheelDelta() const;
 
 		//  Set mouse position in window coordinates
-		void SetMousePosition(Vector2<int> aPosition);
+		void SetMousePosition(Vector2<float> aPosition);
 
 	private:
-		Vector2<int> myMousePosition;
-		Vector2<int> myPreviousMousePosition;
+		Vector2<float> myMousePosition;
+		Vector2<float> myPreviousMousePosition;
 		int myMouseWheelDelta;
 		std::array<KeyInfo, 256> myKeyInfo;
 		MouseButtonInfo myMouseButtons[3]; // LEFT=0, RIGHT=1, MIDDLE=2

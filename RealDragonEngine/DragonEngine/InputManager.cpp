@@ -107,18 +107,18 @@ namespace DragonEngine {
 		return myMouseButtons[static_cast<int>(button)].isReleased;
 	}
 
-	DragonEngine::Vector2<int> InputManager::GetMousePosition() const
+	DragonEngine::Vector2<float> InputManager::GetMousePosition() const
 	{
 		return myMousePosition;
 	}
 
-	DragonEngine::Vector2<int> InputManager::GetMouseDelta() const
+	DragonEngine::Vector2<float> InputManager::GetMouseDelta() const
 	{
 		return { myMousePosition.x - myPreviousMousePosition.x,
 				 myMousePosition.y - myPreviousMousePosition.y };
 	}
 
-	void InputManager::SetMousePosition(DragonEngine::Vector2<int> aPosition)
+	void InputManager::SetMousePosition(DragonEngine::Vector2<float> aPosition)
 	{
 		myMousePosition = aPosition;
 		SDL_WarpMouseInWindow(SDL_GetKeyboardFocus(), static_cast<float>(aPosition.x), static_cast<float>(aPosition.y));
@@ -163,9 +163,8 @@ namespace DragonEngine {
 			// Update isDown
 			myKeyInfo[scancode].isDown = isDown;
 		}
-
-		float x, y;
-		Uint32 mouseState = SDL_GetMouseState(&x, &y);
+		myPreviousMousePosition = myMousePosition;
+		SDL_MouseButtonFlags mouseState = SDL_GetMouseState(&myMousePosition.x, &myMousePosition.y);
 		for (int i = 0; i < 3; ++i) // LEFT=0, RIGHT=1, MIDDLE=2
 		{
 			bool wasDown = myMouseButtons[i].isDown;
@@ -176,18 +175,12 @@ namespace DragonEngine {
 			myMouseButtons[i].isDown = isDown;
 		}
 
-
 		// Mouse events / quit
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
 		{
 			switch (event.type)
 			{
-			case SDL_EVENT_MOUSE_MOTION:
-				myPreviousMousePosition = myMousePosition;
-				myMousePosition.x = static_cast<int>(event.motion.x);
-				myMousePosition.y = static_cast<int>(event.motion.y);
-				break;
 			case SDL_EVENT_MOUSE_WHEEL:
 				myMouseWheelDelta += static_cast<int>(event.wheel.y);
 				break;
