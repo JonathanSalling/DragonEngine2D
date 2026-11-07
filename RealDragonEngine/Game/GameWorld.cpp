@@ -6,7 +6,7 @@
 #include <Debug.h>
 #include "Audio.h"
 
-GameWorld::GameWorld() : myDragonEngineLogoSprite(nullptr)
+GameWorld::GameWorld() : myDragonEngineLogoSprite(nullptr), myMusic(nullptr), mySoundEffect(nullptr)
 {
 }
 
