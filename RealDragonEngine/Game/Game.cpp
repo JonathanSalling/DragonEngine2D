@@ -42,7 +42,6 @@ void Game::UpdateCallBack()
 {
 	DragonEngine::Timer::Update();
 	myGameWorld.Update(*myInputManager, DragonEngine::Timer::GetDeltaTime());
-	RenderCallBack();
 }
 
 void Game::RenderCallBack()

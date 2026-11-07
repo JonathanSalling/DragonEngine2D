@@ -1,6 +1,5 @@
 #include "Engine.h"
 #include "Text.h"
-
 #include <cassert>
 #include <SDL3_ttf/SDL_ttf.h>
 

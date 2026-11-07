@@ -34,6 +34,11 @@ SDL_AppResult SDL_AppIterate(void* appstate)
 	game->UpdateInput();
 	game->UpdateCallBack();
 
+
+#ifndef RELEASE_NO_RENDER
+	game->RenderCallBack();
+#endif
+
 	return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
 
