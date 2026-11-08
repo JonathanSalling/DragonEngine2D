@@ -5,6 +5,7 @@ namespace DragonEngine
 {
 	class InputManager;
 	class Timer;
+	class PerformanceTracker;
 }
 
 union SDL_Event;
@@ -25,5 +26,6 @@ public:
 private:
 	GameWorld myGameWorld;
 	DragonEngine::InputManager* myInputManager;
+	DragonEngine::PerformanceTracker* myPerformanceTracker;
 };
 

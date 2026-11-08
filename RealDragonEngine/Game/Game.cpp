@@ -1,17 +1,21 @@
 #include "Game.h"
-#include "InputManager.h"
-#include "Timer.hpp"
 #include <Engine.h>
+#include "InputManager.h"
+#include "PerformanceTracker.h"
+#include "Timer.hpp"
 
 Game::Game()
 {
 	myInputManager = new DragonEngine::InputManager();
+	myPerformanceTracker = new DragonEngine::PerformanceTracker();
 }
 
 Game::~Game()
 {
 	delete myInputManager;
+	delete myPerformanceTracker;
 	myInputManager = nullptr;
+	myPerformanceTracker = nullptr;
 }
 
 int Game::Init()
@@ -40,6 +44,7 @@ void Game::InitCallBack()
 
 void Game::UpdateCallBack()
 {
+	myPerformanceTracker->Update();
 	DragonEngine::Timer::Update();
 	myGameWorld.Update(*myInputManager, DragonEngine::Timer::GetDeltaTime());
 }
