@@ -104,6 +104,11 @@ void DragonEngine::Sprite::SetScale(const DragonEngine::Vector2<float>& aScale)
 	myScale = aScale;
 }
 
+void DragonEngine::Sprite::SetUniformScale(const float aScale)
+{
+	myScale = { aScale,aScale };
+}
+
 void DragonEngine::Sprite::SetRotation(const double rotation)
 {
 	myRotation = rotation;

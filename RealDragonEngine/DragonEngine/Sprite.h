@@ -73,6 +73,8 @@ namespace DragonEngine
 		DragonEngine::Vector2<float> GetScale() const;
 		// Sets the scale of the sprite (relative to original size).
 		void SetScale(const DragonEngine::Vector2<float>& aScale);
+		// Sets the scale of the sprite uniformly (relative to original size)
+		void SetUniformScale(float aScale);
 
 		// Sets the color of the sprite (RGB values from 0 to 255).
 		void SetColor(const DragonEngine::Color& aColor);
